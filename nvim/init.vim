@@ -1,25 +1,23 @@
-"                   _       _ _         _
-" _ __ ___  _   _  (_)_ __ (_) |___   _(_)_ __ ___
-"| '_ ` _ \| | | | | | '_ \| | __\ \ / / | '_ ` _ \
-"| | | | | | |_| | | | | | | | |_ \ V /| | | | | | |
-"|_| |_| |_|\__, | |_|_| |_|_|\__(_)_/ |_|_| |_| |_|
-"           |___/
+"
+"__     _____ __  __ ____   ____ 
+"\ \   / /_ _|  \/  |  _ \ / ___|
+" \ \ / / | || |\/| | |_) | |    
+"  \ V /  | || |  | |  _ <| |___ 
+"   \_/  |___|_|  |_|_| \_\\____|
+"                                
 
 
-" ===
-" === Auto load for first time uses
-" ===
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
-endif
-
-let mapleader=" "
 syntax on
+set termguicolors
+highlight Normal guibg=NONE ctermbg=None
+set nocompatible
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+let mapleader=" "
 set number
 set relativenumber
-set cursorline
 set wrap
 set showcmd
 set wildmenu
@@ -29,12 +27,6 @@ exec "nohlsearch"
 set incsearch
 set ignorecase
 set smartcase
-
-
-filetype on
-filetype indent on
-filetype plugin on
-filetype plugin indent on
 set mouse=a
 set encoding=utf-8
 let &t_ut=''
@@ -71,7 +63,6 @@ set scrolloff=4
 set ttimeoutlen=0
 set notimeout
 set viewoptions=cursor,folds,slash,unix
-set wrap
 set tw=0
 set indentexpr=
 set foldmethod=indent
@@ -80,115 +71,145 @@ set foldenable
 set formatoptions-=tc
 set splitright
 set splitbelow
-set noshowmode
-set showcmd
-set wildmenu
-set ignorecase
-set smartcase
 set shortmess+=c
 set inccommand=split
 set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast "should make scrolling faster
 set lazyredraw "same as above
 set visualbell
+set updatetime=100
 
-let mapleader=" "
-
-" Save & quit
+" Save & quit 保存并退出
 noremap Q :q<CR>
-" noremap <C-q> :qa<CR>
 noremap S :w<CR>
-
 noremap ; :
 noremap <LEADER><CR> :nohlsearch<CR>
-" Open the vimrc file anytime
-noremap <LEADER>rc :source $HOME/.config/nvim/init.vim<CR>
-
-" Auto change directory to current dir
-autocmd BufEnter * silent! lcd %:p:h
+" Open the vimrc file anytime  
+noremap RC :source ~/.config/nvim/init.vim<CR>
 
 
-" 向右分屏幕
-map sl :set splitright<CR>:vsplit<CR> 
-" 向左分屏幕
+" Adjacent duplicate words
+" noremap <LEADER>fd /\(\<\w\+\>\)\_s*\1
+
+
+" 拼写检查
+noremap <LEADER>sc :set spell!<CR>
+
+" 分屏
+" 向右分屏
+map sl :set splitright<CR>:vsplit<CR>
+" 向左分屏
 map sh :set nosplitright<CR>:vsplit<CR>
-" 向下分屏幕
-map sj :set splitbelow<CR>:split<CR>
-" 向上分屏幕
+" 向上分屏
 map sk :set nosplitbelow<CR>:split<CR>
+" 向下分屏
+map sj :set splitbelow<CR>:split<CR>
 
-" 分屏时光标移动
+
+" 分屏光标移动
+" 向右
 map <LEADER>l <C-w>l
-map <LEADER>h <C-w>h
-map <LEADER>j <C-w>j
-map <LEADER>k <C-w>k
+" 向左
+map <LEADER>h	<C-w>h
+" 向下
+map <LEADER>j	<C-w>j
+" 向上
+map <LEADER>k	<C-w>k
 
-" 调整分屏的屏幕大小
+
+" 调整分屏大小
 map <C-up> :res +5<CR>
 map <C-down> :res -5<CR>
 map <C-left> :vertical resize-5<CR>
 map <C-right> :vertical resize+5<CR>
 
+" 调整分屏的屏幕大小
+map <C-up> :res +5<CR>
+map <C-down> :res -5<CR>
+map <C-left> :vertical resize+5<CR>
+map <C-right> :vertical resize-5<CR>
+
+
+" Call figlet
+noremap tx :r !figlet 
+
+" 标签
 map tu :tabe<CR>
 map th :-tabnext<CR>
 map tl :+tabnext<CR>
 
 
+
+" ==================== Markdown Settings ====================
+" Snippets
+source $HOME/.config/nvim/md-snippets.vim
+" auto spell
+autocmd BufRead,BufNewFile *.md setlocal spell
+
+
+" 更改分屏方式上下/左右
 map sv :<C-w>t<C-w>H
 map sh :<C-w>t<C-w>K
 
-" Duplicate words
-map <LEADER>fd /\(\<\w\+\>\)\_s*\1
-" Others
-map <LEADER>o o<Esc>u
-
-" ===
-" === Other useful stuff
-" ===
-
-" Press space twice to jump to the next '<++>' and edit it
-map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4i
-
-" Spelling Check with <space>sc
-map <LEADER>sc :set spell!<CR>
-noremap <C-x> ea<C-x>s
-inoremap <C-x> <Esc>ea<C-x>s
-
-" Press ` to change case (instead of ~)
-map ` ~
-
-
-map <LEADER>sc :set spell!<CR>
-
-" Call figlet
-map tx :r !figlet 
 
 " Compile function
-map r :call CompileRunGcc()<CR>
+noremap <C-r> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-  exec "w"
-  if &filetype == 'c'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
-  elseif &filetype == 'cpp'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
-  elseif &filetype == 'java'
-    exec "!javac %"
-    exec "!time java %<"
-  elseif &filetype == 'sh'
-    :!time bash %
-  elseif &filetype == 'python'
-    silent! exec "!clear"
-    exec "!time python %"
-  elseif &filetype == 'html'
-    exec "!firefox % &"
-  elseif &filetype == 'markdown'
-    exec "MarkdownPreview"
-  elseif &filetype == 'vimwiki'
-    exec "MarkdownPreview"
-  endif
+	exec "w"
+	if &filetype == 'c'
+		set splitbelow
+		:sp
+		:res -5
+		term gcc % -o %< && time ./%<
+	elseif &filetype == 'cpp'
+		set splitbelow
+		exec "!g++ -std=c++11 % -Wall -o %<"
+		:sp
+		:res -15
+		:term ./%<
+	elseif &filetype == 'cs'
+		set splitbelow
+		silent! exec "!mcs %"
+		:sp
+		:res -5
+		:term mono %<.exe
+	elseif &filetype == 'java'
+		set splitbelow
+		:sp
+		:res -5
+		term javac % && time java %<
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'python'
+		set splitbelow
+		:sp
+		:term python3 %
+	elseif &filetype == 'html'
+		silent! exec "!".g:mkdp_browser." % &"
+	elseif &filetype == 'markdown'
+		exec "InstantMarkdownPreview"
+	elseif &filetype == 'tex'
+		silent! exec "VimtexStop"
+		silent! exec "VimtexCompile"
+	elseif &filetype == 'dart'
+		exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
+		silent! exec "CocCommand flutter.dev.openDevLog"
+	elseif &filetype == 'javascript'
+		set splitbelow
+		:sp
+		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
+	elseif &filetype == 'racket'
+		set splitbelow
+		:sp
+		:res -5
+		term racket %
+	elseif &filetype == 'go'
+		set splitbelow
+		:sp
+		:term go run .
+	endif
 endfunc
+
 
 map R :call CompileBuildrrr()<CR>
 func! CompileBuildrrr()
@@ -201,205 +222,95 @@ func! CompileBuildrrr()
 endfunc
 
 
-
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
+" vim-plug插件
 call plug#begin('~/.config/nvim/plugged')
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'yuttie/hydrangea-vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'Mofiqul/dracula.nvim'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-" Make sure you use single quotes
+Plug 'dracula/vim', { 'as': 'dracula' }
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using a non-default branch
-" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
-
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-" Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
-
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" vim-plug
 Plug 'connorholyday/vim-snazzy'
-" Plug 'connorholyday/vim-snazzy'
 
-Plug 'scrooloose/nerdtree'
-
-Plug 'dense-analysis/ale'
 
 Plug 'preservim/tagbar'
 
+Plug 'dense-analysis/ale'
+
 Plug 'mbbill/undotree'
 
-" If you don't have nodejs and yarn
-" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
-" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-
 " If you have nodejs and yarn
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+Plug 'dkarter/bullets.vim'
 
-Plug 'nathanaelkane/vim-indent-guides'
+" Python
+Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
+"Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
+"Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
+"Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 
-Plug 'junegunn/goyo.vim' " distraction free writing mode
+" For general writing
+Plug 'junegunn/goyo.vim'
+Plug 'reedes/vim-wordy'
+"Plug 'ron89/thesaurus_query.vim'
 
+Plug 'mhinz/vim-startify'
 
-" Bookmarks
-Plug 'kshenoy/vim-signature'
+" Pretty Dress
+Plug 'theniceboy/nvim-deus'
 
-" Initialize plugin system
+Plug 'wellle/tmux-complete.vim'
+
+" Snippets
+" Plug 'SirVer/ultisnips'
+Plug 'theniceboy/vim-snippets'
+
+Plug 'theniceboy/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
+Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+
+Plug 'mg979/vim-visual-multi'
+
+" coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 
 
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-"let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" ==================== wildfire ====================
+map <c-b> <Plug>(wildfire-quick-select)
+let g:wildfire_objects = {
+    \ "*" : ["i'", 'i"', "i)", "i]", "i}", "it"],
+    \ "html,xml" : ["at", "it"],
+\ }
 
 
 
-" ===
-" === vim-signiture
-" ===
-let g:SignatureMap = {
-        \ 'Leader'             :  "m",
-        \ 'PlaceNextMark'      :  "m,",
-        \ 'ToggleMarkAtLine'   :  "m.",
-        \ 'PurgeMarksAtLine'   :  "dm-",
-        \ 'DeleteMark'         :  "dm",
-        \ 'PurgeMarks'         :  "dm/",
-        \ 'PurgeMarkers'       :  "dm?",
-        \ 'GotoNextLineAlpha'  :  "m<LEADER>",
-        \ 'GotoPrevLineAlpha'  :  "",
-        \ 'GotoNextSpotAlpha'  :  "m<LEADER>",
-        \ 'GotoPrevSpotAlpha'  :  "",
-        \ 'GotoNextLineByPos'  :  "",
-        \ 'GotoPrevLineByPos'  :  "",
-        \ 'GotoNextSpotByPos'  :  "mn",
-        \ 'GotoPrevSpotByPos'  :  "mp",
-        \ 'GotoNextMarker'     :  "",
-        \ 'GotoPrevMarker'     :  "",
-        \ 'GotoNextMarkerAny'  :  "",
-        \ 'GotoPrevMarkerAny'  :  "",
-        \ 'ListLocalMarks'     :  "m/",
-        \ 'ListLocalMarkers'   :  "m?"
-        \ }
 
+
+" dracula 主题
+colorscheme dracula
+highlight Normal guibg=NONE ctermbg=None
+
+" perl_provider
+let g:loaded_perl_provider = 0
+
+
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
+
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 " ===
-" === Goyo
-" ===
-map <LEADER>gy :Goyo<CR>
-
-
-
-
-" ===
-" === Python-syntax
-" ===
-let g:python_highlight_all = 1
-" let g:python_slow_sync = 0
-
-
-" ===
-" === vim-indent-guide
-" ===
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 1
-silent! unmap <LEADER>ig
-autocmd WinEnter * silent! unmap <LEADER>ig
-
-
-
-
-" ===
-" === vim-table-mode
-" ===
-map <LEADER>tm :TableModeToggle<CR>
-
-
-
-" ===
-" === MarkdownPreview
-" ===
-map r :MarkdownPreview<CR>
-map <C-s> :MarkdownPreviewStop<CR>
-map <C-p> :MarkdownPreviewToggle<CR>
-
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 0
-let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'google-chrome-stable'
-let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1
-    \ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '「${name}」'
-
-
-
-
-" ===
-" === Undotree
-" ===
-let g:undotree_DiffAutoOpen = 0
-map L :UndotreeToggle<CR>
-
-
-
-
-
-
-
-
-" ===
-" === Taglist
+" === Taglist 查看函数
 " ===
 map <silent> T :TagbarOpenAutoClose<CR>
-
 
 
 " ===
@@ -409,58 +320,100 @@ let b:ale_linters = ['pylint']
 let b:ale_fixers = ['autopep8', 'yapf']
 
 
-
 " ===
-" === NERDTree
+" === Undotree 查看文件修改历史
 " ===
-map tt :NERDTreeToggle<CR>
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = ""
-let NERDTreeMapUpdirKeepOpen = "l"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = "n"
-let NERDTreeMapChangeRoot = "y"
-
-" ==
-" == NERDTree-git
-" ==
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
+let g:undotree_DiffAutoOpen = 0
+map L :UndotreeToggle<CR>
 
 
 
-"colorscheme snazzy
-"let g:SnazzyTransparent = 0
-"
+" ==================== vim-instant-markdown ====================
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_autoscroll = 1
 
 
 " ===
-" === coc.nvim
+" === vim-table-mode
 " ===
+map <LEADER>tm :TableModeToggle<CR>
+
+
+" ===
+" === Python-syntax
+" ===
+let g:python_highlight_all = 1
+" let g:python_slow_sync = 0
+
+
+" ==================== vim-markdown-toc ====================
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+
+" ==================== vim-instant-markdown ====================
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_autoscroll = 1
+
+
+" ==================== goyo ====================
+" 让nvim变成一个纯粹的编辑器样式
+map <LEADER>gy :Goyo<CR>
+
+
+" ==================== Dress up my vim ====================
+" set termguicolors " enable true colors support
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" silent! color deus
+
+hi NonText ctermfg=gray guifg=grey10
+"hi SpecialKey ctermfg=blue guifg=grey70
+
+
+
+
+
+" ==================== vim-visual-multi ====================
+"let g:VM_theme             = 'iceblue'
+"let g:VM_default_mappings = 0
+let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_maps                       = {}
+let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+let g:VM_maps['i']                  = 'k'
+let g:VM_maps['I']                  = 'K'
+let g:VM_maps['Find Under']         = '<C-k>'
+let g:VM_maps['Find Subword Under'] = '<C-k>'
+let g:VM_maps['Find Next']          = ''
+let g:VM_maps['Find Prev']          = ''
+let g:VM_maps['Remove Region']      = 'q'
+let g:VM_maps['Skip Region']        = '<c-n>'
+let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Redo"]               = '<C-r>'
+
+
+" ==================== coc.nvim ====================
 let g:coc_global_extensions = [
 	\ 'coc-css',
 	\ 'coc-diagnostic',
-	\ 'coc-docker',
 	\ 'coc-eslint',
 	\ 'coc-explorer',
 	\ 'coc-flutter-tools',
 	\ 'coc-gitignore',
 	\ 'coc-html',
 	\ 'coc-import-cost',
-	\ 'coc-java',
 	\ 'coc-jest',
 	\ 'coc-json',
 	\ 'coc-lists',
@@ -472,26 +425,55 @@ let g:coc_global_extensions = [
 	\ 'coc-sourcekit',
 	\ 'coc-stylelint',
 	\ 'coc-syntax',
-	\ 'coc-tailwindcss',
+	\ 'https://github.com/theniceboy/coc-tailwindcss',
 	\ 'coc-tasks',
 	\ 'coc-translator',
-	\ 'coc-tsserver',
 	\ 'coc-vetur',
 	\ 'coc-vimlsp',
 	\ 'coc-yaml',
-	\ 'coc-yank']
+	\ 'coc-yank',
+	\ 'coc-marketplace',
+	\'coc-tsserver']
+
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" 设置tab补全
 inoremap <silent><expr> <TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
+      \ pumvisible() ? "\<C-n>" :
+      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <silent><expr> <c-space> coc#refresh()
+
+" 调出补全
 inoremap <silent><expr> <c-o> coc#refresh()
+
+" 回车确认补全项
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+" Use `[g` and `]g` to navigate diagnostics 查找代码报错
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
+nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation. 查看函数定义/调用
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" 查看文档
 function! Show_documentation()
 	call CocActionAsync('highlight')
 	if (index(['vim','help'], &filetype) >= 0)
@@ -501,15 +483,43 @@ function! Show_documentation()
 	endif
 endfunction
 nnoremap <LEADER>h :call Show_documentation()<CR>
-" set runtimepath^=~/.config/nvim/coc-extensions/coc-flutter-tools/
-" let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
-" let $NVIM_COC_LOG_LEVEL = 'debug'
-" let $NVIM_COC_LOG_FILE = '/Users/david/Desktop/log.txt'
 
-nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
-nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
-nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
-nnoremap <c-c> :CocCommand<CR>
+
+" 同一个词标记
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" 变量重命名
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.代码格式化
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+
+" Applying codeAction to the selected region.调出选项
+" Example: `<leader>aap` for current paragraph
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>aw  <Plug>(coc-codeaction-selected)w
+
+" 文件树
+nmap tt :CocCommand explorer<CR>
+
+" 翻译
+nmap ts <Plug>(coc-translator-p)
+
+" coc-tasks
+noremap <silent> <leader>ts :CocList tasks<CR>
+" coc-snippets
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-e> <Plug>(coc-snippets-select)
+let g:coc_snippet_next = '<c-e>'
+let g:coc_snippet_prev = '<c-n>'
+imap <C-e> <Plug>(coc-snippets-expand-jump)
+autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
+
 " Text Objects
 xmap kf <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
@@ -519,44 +529,14 @@ xmap kc <Plug>(coc-classobj-i)
 omap kc <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-" Useful commands
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gD :tab sp<CR><Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-nmap tt :CocCommand explorer<CR>
-" coc-translator
-nmap ts <Plug>(coc-translator-p)
-" Remap for do codeAction of selected region
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>aw  <Plug>(coc-codeaction-selected)w
-" coctodolist
-" nnoremap <leader>tn :CocCommand todolist.create<CR>
-" nnoremap <leader>tl :CocList todolist<CR>
-" nnoremap <leader>tu :CocCommand todolist.download<CR>:CocCommand todolist.upload<CR>
-" coc-tasks
-noremap <silent> <leader>ts :CocList tasks<CR>
-" coc-snippets
-imap <C-l> <Plug>(coc-snippets-expand)
-vmap <C-e> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-e>'
-let g:coc_snippet_prev = '<c-n>'
-imap <C-e> <Plug>(coc-snippets-expand-jump)
-let g:snips_author = 'David Chen'
-autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 
-let g:lightline = {
-      \ 'colorscheme': 'hydrangea',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"":""}',
-      \ },
-      \ 'separator':    { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
+" example
+nmap <C-r> :MarkdownPreview<CR>
+nmap <C-s> :MarkdownPreviewStop<CR>
+nmap <C-p> :MarkdownPreviewToggle<CR>
+
+
+
+
+

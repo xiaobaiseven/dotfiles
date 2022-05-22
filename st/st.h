@@ -114,8 +114,6 @@ void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
 char *xstrdup(const char *);
 
-int xgetcolor(int x, unsigned char *r, unsigned char *g, unsigned char *b);
-
 // from @LukeSmithxyz
 void externalpipe(const Arg *);
 
