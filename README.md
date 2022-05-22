@@ -3,7 +3,7 @@
 ### make.conf是我的gentoo配置文件,kernel.config是我的内核配置文件，请勿照搬！！！　
 
 ## 使用方法
-### 需要安装一些软件xorg-server xorg-xinit ranger ueberzug neovim picom-jonaburg rofi dmenu feh nerd-fonts(在gento中的包名，其他发行版可能略有不同) 
+### 需要安装一些软件xorg-server xorg-xinit ranger ueberzug neovim picom-jonaburg rofi dmenu feh nerd-fonts(在gentoo中的包名，其他发行版可能略有不同) 
 ```bash
 cd 
 git clone https://github.com/xiaobaiseven/dotfiles.git
