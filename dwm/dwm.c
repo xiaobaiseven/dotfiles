@@ -928,11 +928,13 @@ drawbar(Monitor *m)
 			for (c = m->clients; c; c = c->next) {
 				if (!ISVISIBLE(c))
 					continue;
-				if (m->sel == c) {
+				}
+				if (m->sel == c) { 
 					scm = SchemeSel;
-					drw_text(drw, x, 0, tabw, bh, lrpad / 2 + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
+					drw_text(drw, x, 0, w, bh, lrpad / 2 + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
 					drw_pic(drw, x + lrpad / 2, (bh - c->ich) / 2, c->icw, c->ich, c->icon);
-				} else if (HIDDEN(c))
+				}
+				else if (HIDDEN(c))
 					scm = SchemeHid;
 				else
 					scm = SchemeNorm;
@@ -950,7 +952,6 @@ drawbar(Monitor *m)
 			drw_setscheme(drw, scheme[SchemeNorm]);
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
-	}
 
 	m->bt = n;
 	m->btw = w;
