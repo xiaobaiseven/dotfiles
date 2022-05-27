@@ -19,6 +19,8 @@ static const int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 1; /* 0 means no bar */
 static const int topbar = 1;  /* 0 means bottom bar */
+#define ICONSIZE 16   /* icon size */
+#define ICONSPACING 5 /* space between icon and title */
 static const unsigned int systraypinning =
     0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor
           X */
@@ -44,7 +46,6 @@ static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
     [SchemeSel] = {col_gray4, col_cyan, col_cyan},
-    [SchemeHid] = {col_cyan, col_gray1, col_cyan},
 };
 static const unsigned int alphas[][3] = {
     /*               fg      bg        border     */
@@ -135,12 +136,10 @@ static Key keys[] = {
     {MODKEY, XK_b, togglebar, {0}},                   //隐藏状态栏
     {MODKEY | ShiftMask, XK_b, rotatestack, {.i = +1}}, //循环交换两个窗口的位置
     {MODKEY | ShiftMask, XK_p, rotatestack, {.i = -1}},
-    {MODKEY, XK_j, focusstackvis, {.i = +1}}, //光标在窗口之间循环
-    {MODKEY, XK_k, focusstackvis, {.i = -1}},
-    {MODKEY | ShiftMask, XK_j, focusstackhid, {.i = +1}},
-    {MODKEY | ShiftMask, XK_k, focusstackhid, {.i = -1}},
     {MODKEY, XK_i, incnmaster, {.i = +1}}, //将窗口回复垂直逻辑
     {MODKEY | ShiftMask, XK_i, incnmaster, {.i = -1}}, //将窗口改为横着
+		{MODKEY ,                       XK_j,      focusstack,     {.i = +1 } },
+		{MODKEY ,                       XK_k,      focusstack,     {.i = -1 } },
     {MODKEY, XK_h, setmfact, {.f = -0.05}}, //左右调整窗口占比
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
     {MODKEY | ShiftMask, XK_Return, zoom, {0}}, //交换两个刚打开的窗口的位置
@@ -178,8 +177,6 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_y, incrovgaps, {.i = +1}},
     {MODKEY | ShiftMask, XK_o, incrovgaps, {.i = -1}},
     {MODKEY, XK_y, togglescratch, {.v = scratchpadcmd}},
-    {MODKEY, XK_s, show, {0}}, //显示隐藏的窗口
-    {MODKEY, XK_v, hide, {0}}, //隐藏窗口
     TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
         TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
             TAGKEYS(XK_9, 8){MODKEY | ShiftMask, XK_q, quit, {0}},
@@ -192,7 +189,6 @@ static Button buttons[] = {
     /* click                event mask      button          function argument */
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
-    {ClkWinTitle, 0, Button1, togglewin, {0}},
     {ClkWinTitle, 0, Button2, zoom, {0}},
     {ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
     {ClkClientWin, MODKEY, Button1, movemouse, {0}},
