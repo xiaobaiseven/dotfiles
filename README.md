@@ -28,4 +28,4 @@ cd ~/.config/dc-slstatus
 make
 sudo make clean install
 ```
-
+### 快捷键使用说明都在config.h文件里面，可以根据自己的使用习惯和需求自行更改
