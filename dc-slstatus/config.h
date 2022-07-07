@@ -80,7 +80,7 @@ static const struct arg args[] = {
 	{run_command, " \uf2c8 %s", get_cpu_temp},
 	{ram_perc, "💿 %s%%", NULL},
 	{disk_perc, " \uf0a0 %s%%", "/"},
-	{run_command, " \uf8c7 %s",get_cpu_temp},
+	{run_command, " \uf8c7 %s",get_nvidia_temp},
 	{netspeed_rx, "\uf063 %s", "enp4s0"},
 	{netspeed_tx, " \uf062 %s", "enp4s0"},
 	//{ipv4, " \uf26b %s ", "enp4s0"},
