@@ -67,7 +67,7 @@ static const char vol[]         = "[ `amixer sget Master | tail -n 1 | awk '{pri
                                    && printf \" \uf028 `amixer sget Master | tail -n 1 | awk '{print $5;}' | grep -Po '\\[\\K[^%]*'`%%\" \
                                    || printf '\uf028 \uf05e '";
 
-static const char get_time[] = "date '+%Y年%m月%d日(%A) \uf017 %T'";
+static const char get_time[] = "date '+%Y年%m月%d日(%a) \uf017 %T'";
 
 static const char get_cpu_temp[] = "sensors coretemp-isa-0000 | awk -F: '{ print $2 }' | sed -n '3p' | sed -r 's/[^0-9]*([0-9](.*)°C  ).*/\\1/'";
 
@@ -80,8 +80,8 @@ static const struct arg args[] = {
 	{run_command, " \uf2c8 %s", get_cpu_temp},
 	{ram_perc, "💿 %s%%", NULL},
 	{disk_perc, " \uf0a0 %s%%", "/"},
-	{run_command, " \uf8c7 %s",get_nvidia_temp},
-	{netspeed_rx, "\uf063 %s", "enp4s0"},
+	{run_command, " \uf8c7 %s°C",get_nvidia_temp},
+	{netspeed_rx, " \uf063 %s", "enp4s0"},
 	{netspeed_tx, " \uf062 %s", "enp4s0"},
 	//{ipv4, " \uf26b %s ", "enp4s0"},
 	{run_command, "%s ", vol},

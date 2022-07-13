@@ -76,9 +76,9 @@ static const int lockfullscreen =
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {"[平铺模式]", tile}, /* first entry is default */
-    {"[浮动模式]", NULL}, /* no layout function means floating behavior */
-    {"[M]", monocle},
+    {"[平铺]", tile}, /* first entry is default */
+    {"[浮动]", NULL}, /* no layout function means floating behavior */
+    {"[单页]", monocle},
 };
 
 /* key definitions */
