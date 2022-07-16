@@ -1,5 +1,9 @@
 #!/bin/sh
 
+
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto
+xrandr --dpi 96
 # 设置中文环境
 eval "$(dbus-launch --sh-syntax --exit-with-session)"
 export LANG=zh_CN.UTF-8
@@ -65,13 +69,15 @@ fi
 
 
 # 开机自启动的软件
-
+export _JAVA_AWT_WM_NONREPARENTING=1
+exec $1
+wmname LG3D
 #设置半透明
 picom -cGbf --experimental-backend &
 #输入法
 fcitx5 -d &
 #设置壁纸
-feh --recursive --bg-fill Pictures/wallpapers/女神snh48宋昕冉4k高清美女壁纸_无限图库.jpg &
+feh --recursive --bg-fill ~/Pictures/wallpapers/1111062.png &
 #feh --recursive --bg-fill Pictures/wallpapers/mywallpaper.jpg &
 
 #状态栏
