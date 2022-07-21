@@ -9,7 +9,7 @@ cd
 git clone https://github.com/xiaobaiseven/dotfiles.git
 cd dotfiles
 mkdir -v ~/Pictures
-mv Pictures -v ~/
+mv wallpapers ~/Pictures
 cp xinitrc ~/.xinitrc
 # 如果你已经有了.config目录,就将其他的所有文件夹移动到~/.config目录下
 # 如果没有：
