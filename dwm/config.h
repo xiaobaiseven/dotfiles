@@ -28,9 +28,9 @@ static const int systraypinningfailfirst =
           display systray on the last monitor*/
 static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
-static const char *fonts[] = {"文泉驿正黑:size=10",
+static const char *fonts[] = {"霞鹜文楷:size=10",
                               "Fira Code Nerd Font Mono:size=12"};
-static const char dmenufont[] = "文泉驿正黑:size=12";
+static const char dmenufont[] = "霞鹜文楷等宽:size=10";
 static const char col_gray1[] = "#222222"; //状态条底色
 static const char col_gray2[] =
     "#444444"; //当static const unsigned int
@@ -102,7 +102,7 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
-static const char *termalacritty[] = {"alacritty", NULL};
+//static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
                                       "-g", "120x34", NULL};
@@ -111,8 +111,8 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
 static const char *browsercmd[] = {
-    "google-chrome-stable", "--proxy-server=socks5://127.0.0.1:1089", NULL};
-static const char *chromecmd[] = {"google-chrome-stable", NULL};
+    "chromium", "--proxy-server=socks5://127.0.0.1:1089", NULL};
+static const char *chromecmd[] = {"chromium", NULL};
 static const char *radomchwp[] = {
     "/home/dora/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flames", "gui", NULL};
@@ -129,9 +129,9 @@ static Key keys[] = {
      spawn,
      {.v = browsercmd}},                    /*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}}, //打开dmenu
-    //{MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
+    {MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
     //{Mod1Mask, XK_Return, spawn, {.v = termalacritty}}, //打开终端
-    {MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
+    //{MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
     {MODKEY, XK_b, togglebar, {0}},                   //隐藏状态栏
     {MODKEY | ShiftMask, XK_b, rotatestack, {.i = +1}}, //循环交换两个窗口的位置
     {MODKEY | ShiftMask, XK_p, rotatestack, {.i = -1}},
