@@ -28,9 +28,9 @@ static const int systraypinningfailfirst =
           display systray on the last monitor*/
 static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
-static const char *fonts[] = {"霞鹜文楷:size=10",
+static const char *fonts[] = {"文泉驿正黑:size=10",
                               "Fira Code Nerd Font Mono:size=12"};
-static const char dmenufont[] = "霞鹜文楷等宽:size=10";
+static const char dmenufont[] = "文泉驿正黑:size=10";
 static const char col_gray1[] = "#222222"; //状态条底色
 static const char col_gray2[] =
     "#444444"; //当static const unsigned int
@@ -110,9 +110,8 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
-static const char *browsercmd[] = {
-    "chromium", "--proxy-server=socks5://127.0.0.1:1089", NULL};
-static const char *chromecmd[] = {"chromium", NULL};
+//static const char *browsercmd[] = {"chromium", "--proxy-server=socks5://127.0.0.1:1089", NULL};
+static const char *chromecmd[] = {"vivaldi-stable", "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/dora/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flames", "gui", NULL};
@@ -124,10 +123,7 @@ static Key keys[] = {
     {Mod1Mask, XK_a, spawn, {.v = screenshotcmd}}, /*打开火焰截图*/
     {MODKEY, XK_c, spawn, {.v = chromecmd}},                 /*打开chrome*/
     {MODKEY, XK_r, spawn, {.v = radomchwp}}, /*随机切换壁纸*/
-    {MODKEY | ShiftMask,
-     XK_c,
-     spawn,
-     {.v = browsercmd}},                    /*以代理模式打开chrome*/
+    //{MODKEY | ShiftMask,XK_c,spawn,{.v = browsercmd}},                    /*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}}, //打开dmenu
     {MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
     //{Mod1Mask, XK_Return, spawn, {.v = termalacritty}}, //打开终端
