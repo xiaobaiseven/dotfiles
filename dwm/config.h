@@ -96,11 +96,7 @@ static const Layout layouts[] = {
   }
 
 /* commands */
-static char dmenumon[2] =
-    "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {
-    "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
-    "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[] = {"st", NULL};
 //static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
@@ -116,8 +112,8 @@ static const char *radomchwp[] = {
     "/home/dora/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flames", "gui", NULL};
 
-static Key keys[] = {
-    /* modifier                     key        function        argument */
+static const Key keys[] = {
+/* modifier                     key        function        argument */
     {MODKEY, XK_d, spawn, {.v = roficmd}},              /*打开ropfi*/
     {MODKEY | ShiftMask, XK_d, spawn, {.v = roficmd1}}, /*以命令模式打开rofi*/
     {Mod1Mask, XK_a, spawn, {.v = screenshotcmd}}, /*打开火焰截图*/
@@ -184,8 +180,8 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
-    /* click                event mask      button          function argument */
+/* click                event mask      button          function argument */
+static const Button buttons[] = {
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
     {ClkWinTitle, 0, Button1, togglewin, {0}},

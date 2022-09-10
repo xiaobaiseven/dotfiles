@@ -30,7 +30,7 @@ static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
 static const char *fonts[] = {"文泉驿正黑:size=10",
                               "Fira Code Nerd Font Mono:size=12"};
-static const char dmenufont[] = "文泉驿正黑:size=12";
+static const char dmenufont[] = "文泉驿正黑:size=10";
 static const char col_gray1[] = "#222222"; //状态条底色
 static const char col_gray2[] =
     "#444444"; //当static const unsigned int
@@ -76,9 +76,9 @@ static const int lockfullscreen =
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {"[平铺模式]", tile}, /* first entry is default */
-    {"[浮动模式]", NULL}, /* no layout function means floating behavior */
-    {"[M]", monocle},
+    {"[平铺]", tile}, /* first entry is default */
+    {"[浮动]", NULL}, /* no layout function means floating behavior */
+    {"[单页]", monocle},
 };
 
 /* key definitions */
@@ -96,13 +96,9 @@ static const Layout layouts[] = {
   }
 
 /* commands */
-static char dmenumon[2] =
-    "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = {
-    "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
-    "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[] = {"st", NULL};
-static const char *termalacritty[] = {"alacritty", NULL};
+//static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
                                       "-g", "120x34", NULL};
@@ -110,28 +106,24 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
-static const char *browsercmd[] = {
-    "google-chrome-stable", "--proxy-server=socks5://127.0.0.1:1089", NULL};
-static const char *chromecmd[] = {"google-chrome-stable", NULL};
+//static const char *browsercmd[] = {"chromium", "--proxy-server=socks5://127.0.0.1:1089", NULL};
+static const char *chromecmd[] = {"vivaldi-stable", "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/dora/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flames", "gui", NULL};
 
-static Key keys[] = {
-    /* modifier                     key        function        argument */
+static const Key keys[] = {
+/* modifier                     key        function        argument */
     {MODKEY, XK_d, spawn, {.v = roficmd}},              /*打开ropfi*/
     {MODKEY | ShiftMask, XK_d, spawn, {.v = roficmd1}}, /*以命令模式打开rofi*/
     {Mod1Mask, XK_a, spawn, {.v = screenshotcmd}}, /*打开火焰截图*/
     {MODKEY, XK_c, spawn, {.v = chromecmd}},                 /*打开chrome*/
     {MODKEY, XK_r, spawn, {.v = radomchwp}}, /*随机切换壁纸*/
-    {MODKEY | ShiftMask,
-     XK_c,
-     spawn,
-     {.v = browsercmd}},                    /*以代理模式打开chrome*/
+    //{MODKEY | ShiftMask,XK_c,spawn,{.v = browsercmd}},                    /*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}}, //打开dmenu
-    //{MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
+    {MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
     //{Mod1Mask, XK_Return, spawn, {.v = termalacritty}}, //打开终端
-    {MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
+    //{MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
     {MODKEY, XK_b, togglebar, {0}},                   //隐藏状态栏
     {MODKEY | ShiftMask, XK_b, rotatestack, {.i = +1}}, //循环交换两个窗口的位置
     {MODKEY | ShiftMask, XK_p, rotatestack, {.i = -1}},
@@ -188,8 +180,8 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
-    /* click                event mask      button          function argument */
+/* click                event mask      button          function argument */
+static const Button buttons[] = {
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
     {ClkWinTitle, 0, Button1, togglewin, {0}},
