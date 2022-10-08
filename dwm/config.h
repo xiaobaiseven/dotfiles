@@ -28,17 +28,22 @@ static const int systraypinningfailfirst =
           display systray on the last monitor*/
 static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
-static const char *fonts[] = {"文泉驿正黑:size=10",
+static const char *fonts[] = {"霞鹜文楷等宽:size=10",
                               "Fira Code Nerd Font Mono:size=12"};
-static const char dmenufont[] = "文泉驿正黑:size=10";
-static const char col_gray1[] = "#222222"; //状态条底色
-static const char col_gray2[] =
-    "#444444"; //当static const unsigned int
-               // borderpx不为0时，非活动窗口外边框颜色
-static const char col_gray3[] = "#bd93f9"; //当前非活动的title字体颜色
-static const char col_gray4[] = "#8be9fd"; //当前活动的title字体颜色
-static const char col_cyan[] = "#111111";  // title底色
-static const unsigned int baralpha = 0x85;
+static const char dmenufont[] = "霞鹜文楷等宽:size=10";
+//static const char col_gray1[] = "#222222"; //状态条底色
+//static const char col_gray2[] =
+//    "#444444"; //当static const unsigned int
+//               // borderpx不为0时，非活动窗口外边框颜色
+//static const char col_gray3[] = "#bd93f9"; //当前非活动的title字体颜色
+//static const char col_gray4[] = "#8be9fd"; //当前活动的title字体颜色
+//static const char col_cyan[] = "#111111";  // title底色
+static const char col_gray1[]       = "#222222";
+static const char col_gray2[]       = "#444444";
+static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray4[]       = "#eeeeee";
+static const char col_cyan[]        = "#005577";
+static const unsigned int baralpha = 0x95;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3] = {
     /*               fg         bg         border   */
@@ -52,9 +57,10 @@ static const unsigned int alphas[][3] = {
     [SchemeSel] = {OPAQUE, baralpha, borderalpha},
 };
 /* tagging */
-static const char *tags[] = {"\uf015¹", "\ue5fe²", "\uf030³",
+/*static const char *tags[] = {"\uf015¹", "\ue5fe²", "\uf030³",
                              "\uf268⁴", "\uf269⁵", "\ue62a⁶",
-                             "\ue217⁷", "\uf2dc⁸", "\uf30d⁹"};
+                             "\ue217⁷", "\uf2dc⁸", "\uf30d⁹"};*/
+static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -98,7 +104,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[] = {"st", NULL};
-//static const char *termalacritty[] = {"alacritty", NULL};
+static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
                                       "-g", "120x34", NULL};
@@ -107,7 +113,7 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
 //static const char *browsercmd[] = {"chromium", "--proxy-server=socks5://127.0.0.1:1089", NULL};
-static const char *chromecmd[] = {"vivaldi-stable", "--enable-features=VaapiVideoDecoder", NULL};
+static const char *chromecmd[] = {"chromium", "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/dora/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flames", "gui", NULL};
@@ -121,9 +127,9 @@ static const Key keys[] = {
     {MODKEY, XK_r, spawn, {.v = radomchwp}}, /*随机切换壁纸*/
     //{MODKEY | ShiftMask,XK_c,spawn,{.v = browsercmd}},                    /*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}}, //打开dmenu
-    {MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
+    //{MODKEY, XK_Return, spawn, {.v = termcmd}}, //打开终端
     //{Mod1Mask, XK_Return, spawn, {.v = termalacritty}}, //打开终端
-    //{MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
+    {MODKEY, XK_Return, spawn, {.v = termalacritty}}, //打开终端
     {MODKEY, XK_b, togglebar, {0}},                   //隐藏状态栏
     {MODKEY | ShiftMask, XK_b, rotatestack, {.i = +1}}, //循环交换两个窗口的位置
     {MODKEY | ShiftMask, XK_p, rotatestack, {.i = -1}},
