@@ -1,0 +1,25 @@
+*/* -cups -debug -systemd -doc -test -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -bluetooth
+*/* X nls lto pgo nls zstd vdpau vaapi opengl nvidia python dbus policykit elogind alsa pulseaudio icu nvenc truetype 
+*/* PYTHON_TARGETS: -python3_9 python3_10 python3_11
+*/* LUA_TARGETS: -luagit lua5-1
+*/* RUBY_TARGETS: ruby31
+sys-devel/gcc graphite go
+sys-kernel/gentoo-sources experimental symlink
+sys-boot/grub mount
+app-admin/doas persist
+media-libs/mesa -vaapi
+x11-misc/dmenu xinerama
+media-libs/libsndfile minimal
+media-sound/mpg123 -pulseaudio
+media-fonts/nerd-fonts firacode
+app-text/xmlto text
+app-text/ghostscript-gpl -l10n_zh-CN cups
+media-sound/cava portaudio sdl sndio
+sys-libs/zlib minizip
+net-libs/nodejs inspector
+app-crypt/gcr gtk
+dev-db/mysql cjk router
+dev-libs/libdbusmenu gtk3
+www-client/vivaldi proprietary-codecs widevine
+media-video/ffmpeg x264 x265 bluray
+media-video/obs-studio speex v4l
