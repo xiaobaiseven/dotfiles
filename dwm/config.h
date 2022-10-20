@@ -101,7 +101,7 @@ static const char *dmenucmd[] = {"dmenu_run", "-fn", dmenufont, "-nb",
                                  col_gray1,   "-nf", col_gray3, "-sb",
                                  col_cyan,    "-sf", col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
-static const char *termalacritty[] = {"alacritty", NULL};
+// static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
                                       "-g", "120x34", NULL};
@@ -126,11 +126,11 @@ static const Key keys[] = {
     {MODKEY, XK_r, spawn, {.v = radomchwp}},            /*随机切换壁纸*/
     //{MODKEY | ShiftMask,XK_c,spawn,{.v = browsercmd}},
     ///*以代理模式打开chrome*/
-    {MODKEY, XK_p, spawn, {.v = dmenucmd}}, // 打开dmenu
-    //{MODKEY, XK_Return, spawn, {.v = termcmd}}, // 打开终端
-    {Mod1Mask, XK_Return, spawn, {.v = termcmd}},     // 打开终端
-    {MODKEY, XK_Return, spawn, {.v = termalacritty}}, // 打开终端
-    {MODKEY, XK_b, togglebar, {0}},                   // 隐藏状态栏
+    {MODKEY, XK_p, spawn, {.v = dmenucmd}},     // 打开dmenu
+    {MODKEY, XK_Return, spawn, {.v = termcmd}}, // 打开终端
+    //{Mod1Mask, XK_Return, spawn, {.v = termcmd}},     // 打开终端
+    //{MODKEY, XK_Return, spawn, {.v = termalacritty}}, // 打开终端
+    {MODKEY, XK_b, togglebar, {0}}, // 隐藏状态栏
     {MODKEY | ShiftMask,
      XK_b,
      rotatestack,
