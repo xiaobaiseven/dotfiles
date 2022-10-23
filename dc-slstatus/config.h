@@ -4,7 +4,7 @@
 const unsigned int interval = 1000;
 
 /* text to show if no value can be retrieved */
-static const char unknown_str[] = "n/a";
+static const char unknown_str[] = "";
 
 /* maximum output string length */
 #define MAXLEN 2048
@@ -63,27 +63,33 @@ static const char unknown_str[] = "n/a";
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */
-static const char vol[]         = "[ `amixer sget Master | tail -n 1 | awk '{print $6;}'` = \"[on]\" ] \
+static const char get_music_info[] = "bash ~/.config/scripts/get_music_info.sh";
+static const char vol[] =
+    "[ `amixer sget Master | tail -n 1 | awk '{print $6;}'` = \"[on]\" ] \
                                    && printf \" \uf028 `amixer sget Master | tail -n 1 | awk '{print $5;}' | grep -Po '\\[\\K[^%]*'`%%\" \
                                    || printf '\uf028 \uf05e '";
 
 static const char get_time[] = "date '+%Y年%m月%d日(%a) \uf017 %T'";
 
-static const char get_cpu_temp[] = "sensors coretemp-isa-0000 | awk -F: '{ print $2 }' | sed -n '3p' | sed -r 's/[^0-9]*([0-9](.*)°C  ).*/\\1/'";
+static const char get_cpu_temp[] =
+    "sensors coretemp-isa-0000 | awk -F: '{ print $2 }' | sed -n '3p' | sed -r "
+    "'s/[^0-9]*([0-9](.*)°C  ).*/\\1/'";
 
-static const char get_nvidia_temp[] = "nvidia-settings -q gpucoretemp -t | head -n 1";
-
+static const char get_nvidia_temp[] =
+    "nvidia-settings -q gpucoretemp -t | head -n 1";
+static const char get_weather[] = "bash ~/.config/scripts/dwm-weather.sh";
 static const struct arg args[] = {
-	/* function format          argument */
-	{cpu_perc, " \uf2db %s%%", NULL},
-	//{temp," \uf2c8 %s \u2103", "/sys/class/thermal/thermal_zone0/temp"},
-	{run_command, " \uf2c8 %s", get_cpu_temp},
-	{ram_perc, "💿 %s%%", NULL},
-	{disk_perc, " \uf0a0 %s%%", "/"},
-	{run_command, " \uf8c7 %s°C",get_nvidia_temp},
-	{netspeed_rx, " \uf063 %s", "enp4s0"},
-	{netspeed_tx, " \uf062 %s", "enp4s0"},
-	//{ipv4, " \uf26b %s ", "enp4s0"},
-	{run_command, "%s ", vol},
-	{run_command, "\uf455 %s ", get_time},
+    /* function format          argument */
+    {cpu_perc, " \uf2db %s%%", NULL},
+    //{temp," \uf2c8 %s \u2103", "/sys/class/thermal/thermal_zone0/temp"},
+    {run_command, " \uf2c8 %s", get_cpu_temp},
+    {ram_perc, "💿 %s%%", NULL},
+    {disk_perc, " \uf0a0 %s%%", "/"},
+    {run_command, " \uf8c7 %s°C", get_nvidia_temp},
+    {netspeed_rx, " \uf063 %s", "enp4s0"},
+    {netspeed_tx, " \uf062 %s", "enp4s0"},
+    //{ipv4, " \uf26b %s ", "enp4s0"},
+    {run_command, "%s ", vol},
+    {run_command, "%s", get_music_info},
+    {run_command, "\uf455 %s ", get_time},
 };

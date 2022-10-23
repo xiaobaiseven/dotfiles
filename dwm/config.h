@@ -109,8 +109,9 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
-// static const char *browsercmd[] = {"chromium",
-// "--proxy-server=socks5://127.0.0.1:1089", NULL};
+// static const char *browsercmd[] = {"vivaldi",
+//                                  "--enable-features=VaapiVideoDecoder",
+//                                  NULL};
 static const char *chromecmd[] = {"chromium",
                                   "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
@@ -124,7 +125,7 @@ static const Key keys[] = {
     {Mod1Mask, XK_a, spawn, {.v = screenshotcmd}},      /*打开火焰截图*/
     {MODKEY, XK_c, spawn, {.v = chromecmd}},            /*打开chrome*/
     {MODKEY, XK_r, spawn, {.v = radomchwp}},            /*随机切换壁纸*/
-    //{MODKEY | ShiftMask,XK_c,spawn,{.v = browsercmd}},
+    //{MODKEY, XK_g, spawn, {.v = browsercmd}},
     ///*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},     // 打开dmenu
     {MODKEY, XK_Return, spawn, {.v = termcmd}}, // 打开终端
