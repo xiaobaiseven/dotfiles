@@ -6,20 +6,20 @@ dwm_get_music_info(){
 				SEP=""
 
 				if [ "$STATUS" = "Playing" ]; then
-							STATUS="▶ 正在播放"
+							STATUS="▶ 正在播放:"
 							SEP="-"
 							if [ "$ARTIST" = "" ];then
-								echo "$STATUS"视频:"$TITLE "
+								echo "$STATUS""$TITLE "
 							else
-								echo "$STATUS"音乐:"$ARTIST" "$SEP" "$TITLE "
+								echo "$STATUS""$ARTIST" "$SEP" "$TITLE "
 							fi
 						elif [ "$STATUS" = "Paused" ]; then	
-							STATUS="⏸ 暂停播放"
+							STATUS="⏸ 暂停播放:"
 							SEP="-"
 							if [ "$ARTIST" = "" ];then
-								echo "$STATUS"视频:"$TITLE "
+								echo "$STATUS""$TITLE "
 							else
-								echo "$STATUS"音乐:"$ARTIST" "$SEP" "$TITLE "
+								echo "$STATUS""$ARTIST" "$SEP" "$TITLE "
 							fi
 						else
 							STATUS=""
