@@ -77,11 +77,12 @@ picom -cGbf --experimental-backend &
 #输入法
 fcitx5 -d &
 #设置壁纸
-feh --recursive --bg-fill ~/Pictures/wallpapers/1111062.png &
+feh --recursive --bg-fill ~/Pictures/wallpapers/古装美女和一只兔子3840_2160.jpg &
 #feh --recursive --bg-fill Pictures/wallpapers/mywallpaper.jpg &
 
 #状态栏
-slstatus &
+#slstatus &
+dwmblocks &
 # dwmstatus 2>&1 >/dev/null &
 #数字小键盘
 numlockx &

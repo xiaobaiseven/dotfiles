@@ -7,7 +7,7 @@
  */
 // static char *font = "Liberation
 // Mono:pixelsize=15:antialias=true:autohint=true";
-static char *font = "霞鹜文楷等宽:pixelsize=15:antialias=true:autohint=true";
+static char *font = "LXGW WenKai Mono:pixelsize=15:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
     /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true",
