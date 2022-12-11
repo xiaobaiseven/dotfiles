@@ -55,7 +55,8 @@
 #define INTERSECT(x, y, w, h, m)                                               \
   (MAX(0, MIN((x) + (w), (m)->wx + (m)->ww) - MAX((x), (m)->wx)) *             \
    MAX(0, MIN((y) + (h), (m)->wy + (m)->wh) - MAX((y), (m)->wy)))
-#define ISVISIBLE(C) ((C->tags & C->mon->tagset[C->mon->seltags]))
+#define ISVISIBLE(C)                                                           \
+  ((C->mon->isoverview || C->tags & C->mon->tagset[C->mon->seltags]))
 #define HIDDEN(C) ((getstate(C->win) == IconicState))
 #define LENGTH(X) (sizeof X / sizeof X[0])
 #define MOUSEMASK (BUTTONMASK | PointerMotionMask)
@@ -197,6 +198,7 @@ struct Monitor {
   Window barwin;
   const Layout *lt[2];
   Pertag *pertag;
+  unsigned int isoverview;
 };
 
 typedef struct {
@@ -309,6 +311,11 @@ static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *m);
+static void magicgrid(Monitor *m);
+static void toggleoverview(const Arg *arg);
+
+static void grid(Monitor *m, uint gappo, uint uappi);
+static void overview(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
@@ -523,14 +530,26 @@ void arrange(Monitor *m) {
 }
 
 void arrangemon(Monitor *m) {
-  strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
-  if (m->lt[m->sellt]->arrange)
+  if (m->isoverview) {
+    strncpy(m->ltsymbol, overviewlayout.symbol, sizeof m->ltsymbol);
+    overviewlayout.arrange(m);
+    strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
+  } else {
+    strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
     m->lt[m->sellt]->arrange(m);
+  }
 }
-
 void attach(Client *c) {
-  c->next = c->mon->clients;
-  c->mon->clients = c;
+  if (!newclientathead) {
+    Client **tc;
+    for (tc = &c->mon->clients; *tc; tc = &(*tc)->next)
+      ;
+    *tc = c;
+    c->next = NULL;
+  } else {
+    c->next = c->mon->clients;
+    c->mon->clients = c;
+  }
 }
 
 void attachstack(Client *c) {
@@ -554,15 +573,22 @@ void buttonpress(XEvent *e) {
   }
   if (ev->window == selmon->barwin) {
     i = x = 0;
-    unsigned int occ = 0;
-    for (c = m->clients; c; c = c->next)
-      occ |= c->tags;
-    do {
-      /* Do not reserve space for vacant tags */
-      if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
-        continue;
-      x += TEXTW(tags[i]);
-    } while (ev->x >= x && ++i < LENGTH(tags));
+    if (selmon->isoverview) {
+      x += TEXTW(overviewtag);
+      i = ~0;
+      if (ev->x > x)
+        i = LENGTH(tags);
+    } else {
+      unsigned int occ = 0;
+      for (c = m->clients; c; c = c->next)
+        occ |= c->tags;
+      do {
+        /* Do not reserve space for vacant tags */
+        if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+          continue;
+        x += TEXTW(tags[i]);
+      } while (ev->x >= x && ++i < LENGTH(tags));
+    }
     if (i < LENGTH(tags)) {
       click = ClkTagBar;
       arg.ui = 1 << i;
@@ -832,6 +858,7 @@ Monitor *createmon(void) {
   m->gappov = gappov;
   m->lt[0] = &layouts[0];
   m->lt[1] = &layouts[1 % LENGTH(layouts)];
+  m->isoverview = 0;
   strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
   m->pertag = ecalloc(1, sizeof(Pertag));
   m->pertag->curtag = m->pertag->prevtag = 1;
@@ -902,7 +929,7 @@ Monitor *dirtomon(int dir) {
 void drawbar(Monitor *m) {
   int x, w, tw = 0, n = 0, stw = 0, scm;
   // int boxs = drw->fonts->h / 9;
-  // int boxw = drw->fonts->h / 6 + 2;
+  int boxw = drw->fonts->h / 6 + 2;
   unsigned int i, occ = 0, urg = 0;
   Client *c;
 
@@ -930,15 +957,24 @@ void drawbar(Monitor *m) {
       urg |= c->tags;
   }
   x = 0;
-  for (i = 0; i < LENGTH(tags); i++) {
-    /* Do not draw vacant tags */
-    if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
-      continue;
-    w = TEXTW(tags[i]);
-    drw_setscheme(
-        drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-    drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+  if (m->isoverview) {
+    w = TEXTW(overviewtag);
+    drw_setscheme(drw, scheme[SchemeSel]);
+    drw_text(drw, x, 0, w, bh, lrpad / 2, overviewtag, 0);
+    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_rect(drw, x, bh - boxw, w + lrpad, boxw, 1, 0);
     x += w;
+  } else {
+    for (i = 0; i < LENGTH(tags); i++) {
+      /* Do not draw vacant tags */
+      if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+        continue;
+      w = TEXTW(tags[i]);
+      drw_setscheme(
+          drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+      drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+      x += w;
+    }
   }
   w = TEXTW(m->ltsymbol);
   drw_setscheme(drw, scheme[SchemeNorm]);
@@ -1329,17 +1365,25 @@ void grabbuttons(Client *c, int focused) {
 void grabkeys(void) {
   updatenumlockmask();
   {
-    unsigned int i, j;
+    unsigned int i, j, k;
     unsigned int modifiers[] = {0, LockMask, numlockmask,
                                 numlockmask | LockMask};
-    KeyCode code;
+    int start, end, skip;
+    KeySym *syms;
 
     XUngrabKey(dpy, AnyKey, AnyModifier, root);
-    for (i = 0; i < LENGTH(keys); i++)
-      if ((code = XKeysymToKeycode(dpy, keys[i].keysym)))
-        for (j = 0; j < LENGTH(modifiers); j++)
-          XGrabKey(dpy, code, keys[i].mod | modifiers[j], root, True,
-                   GrabModeAsync, GrabModeAsync);
+    XDisplayKeycodes(dpy, &start, &end);
+    syms = XGetKeyboardMapping(dpy, start, end - start + 1, &skip);
+    if (!syms)
+      return;
+    for (k = start; k <= end; k++)
+      for (i = 0; i < LENGTH(keys); i++)
+        /* skip modifier codes, we do that ourselves */
+        if (keys[i].keysym == syms[(k - start) * skip])
+          for (j = 0; j < LENGTH(modifiers); j++)
+            XGrabKey(dpy, k, keys[i].mod | modifiers[j], root, True,
+                     GrabModeAsync, GrabModeAsync);
+    XFree(syms);
   }
 }
 
@@ -2298,6 +2342,69 @@ void tile(Monitor *m) {
     }
 }
 
+void grid(Monitor *m, uint gappo, uint gappi) {
+  unsigned int i, n;
+  unsigned int cx, cy, cw, ch;
+  unsigned int dx;
+  unsigned int cols, rows, overcols;
+  Client *c;
+
+  for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++)
+    ;
+  if (n == 0)
+    return;
+  if (n == 1) {
+    c = nexttiled(m->clients);
+    cw = (m->ww - 2 * gappo) * 0.7;
+    ch = (m->wh - 2 * gappo) * 0.65;
+    resize(c, m->mx + (m->mw - cw) / 2 + gappo,
+           m->my + (m->mh - ch) / 2 + gappo, cw - 2 * c->bw, ch - 2 * c->bw, 0);
+    return;
+  }
+  if (n == 2) {
+    c = nexttiled(m->clients);
+    cw = (m->ww - 2 * gappo - gappi) / 2;
+    ch = (m->wh - 2 * gappo) * 0.65;
+    resize(c, m->mx + gappo, m->my + (m->mh - ch) / 2 + gappo, cw - 2 * c->bw,
+           ch - 2 * c->bw, 0);
+    resize(nexttiled(c->next), m->mx + cw + gappo + gappi,
+           m->my + (m->mh - ch) / 2 + gappo, cw - 2 * c->bw, ch - 2 * c->bw, 0);
+    return;
+  }
+
+  for (cols = 0; cols <= n / 2; cols++)
+    if (cols * cols >= n)
+      break;
+  rows = (cols && (cols - 1) * cols >= n) ? cols - 1 : cols;
+  ch = (m->wh - 2 * gappo - (rows - 1) * gappi) / rows;
+  cw = (m->ww - 2 * gappo - (cols - 1) * gappi) / cols;
+
+  overcols = n % cols;
+  if (overcols)
+    dx = (m->ww - overcols * cw - (overcols - 1) * gappi) / 2 - gappo;
+  for (i = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+    cx = m->wx + (i % cols) * (cw + gappi);
+    cy = m->wy + (i / cols) * (ch + gappi);
+    if (overcols && i >= n - overcols) {
+      cx += dx;
+    }
+    resize(c, cx + gappo, cy + gappo, cw - 2 * c->bw, ch - 2 * c->bw, 0);
+  }
+}
+
+void magicgrid(Monitor *m) { grid(m, gappo, gappi); }
+
+void overview(Monitor *m) { grid(m, overviewgappo, overviewgappi); }
+void toggleoverview(const Arg *arg) {
+  if (selmon->sel &&
+      selmon->sel->isfullscreen) /* no support for fullscreen windows */
+    return;
+
+  uint target = selmon->sel && selmon->sel->tags != TAGMASK ? selmon->sel->tags
+                                                            : selmon->seltags;
+  selmon->isoverview ^= 1;
+  view(&(Arg){.ui = target});
+}
 void togglebar(const Arg *arg) {
   selmon->showbar = selmon->pertag->showbars[selmon->pertag->curtag] =
       !selmon->showbar;
@@ -2842,8 +2949,10 @@ void view(const Arg *arg) {
   int i;
   unsigned int tmptag;
 
-  if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
+  if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags]) {
+    arrange(selmon);
     return;
+  }
   selmon->seltags ^= 1; /* toggle sel tagset */
   if (arg->ui & TAGMASK) {
     selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
