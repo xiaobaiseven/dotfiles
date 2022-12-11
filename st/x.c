@@ -1547,14 +1547,12 @@ void xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len,
   } else {
     /* Render the glyphs. */
     XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
+    FcBool b = FcFalse;
+    FcPatternGetBool(specs->font->pattern, FC_COLOR, 0, &b);
+    if (!b) {
+      XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
+    }
   }
-
-  FcBool b = FcFalse;
-  FcPatternGetBool(specs->font->pattern, FC_COLOR, 0, &b);
-  if (!b) {
-    XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
-  }
-
   /* Render underline and strikethrough. */
   if (base.mode & ATTR_UNDERLINE) {
     XftDrawRect(xw.draw, fg, winx, winy + dc.font.ascent * chscale + 1, width,
@@ -1569,7 +1567,6 @@ void xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len,
   /* Reset clip to none. */
   XftDrawSetClip(xw.draw, 0);
 }
-
 void xdrawglyph(Glyph g, int x, int y) {
   int numspecs;
   XftGlyphFontSpec spec;
