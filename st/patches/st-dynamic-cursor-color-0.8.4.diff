@@ -1,5 +1,17 @@
---- x.c
-+++ x.c
+From 01e706efbc13194a4a4404e91b93a9638a3c1bea Mon Sep 17 00:00:00 2001
+From: Kipras Melnikovas <kipras@kipras.org>
+Date: Thu, 25 Feb 2021 14:31:26 +0200
+Subject: [PATCH] refactor dynamic-cursor-color patch
+
+Signed-off-by: Kipras Melnikovas <kipras@kipras.org>
+---
+ x.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/x.c b/x.c
+index 120e495..ab66364 100644
+--- a/x.c
++++ b/x.c
 @@ -1489,6 +1489,7 @@ void
  xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  {
@@ -35,3 +47,7 @@
  	}
  
  	/* draw the new one */
+-- 
+2.30.1
+
+

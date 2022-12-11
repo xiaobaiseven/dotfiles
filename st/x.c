@@ -1290,6 +1290,8 @@ void xinit(int cols, int rows) {
   xsel.xtarget = XInternAtom(xw.dpy, "UTF8_STRING", 0);
   if (xsel.xtarget == None)
     xsel.xtarget = XA_STRING;
+
+  boxdraw_xinit(xw.dpy, xw.cmap, xw.draw, xw.vis);
 }
 
 int xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len,
@@ -1337,7 +1339,14 @@ int xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len,
     }
 
     /* Lookup character index with default font. */
-    glyphidx = XftCharIndex(xw.dpy, font->match, rune);
+    if (mode & ATTR_BOXDRAW) {
+      /* minor shoehorning: boxdraw uses only this ushort */
+      glyphidx = boxdrawindex(&glyphs[i]);
+    } else {
+      /* Lookup character index with default font. */
+      glyphidx = XftCharIndex(xw.dpy, font->match, rune);
+    }
+
     if (glyphidx) {
       specs[numspecs].font = font->match;
       specs[numspecs].glyph = glyphidx;
@@ -1533,8 +1542,13 @@ void xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len,
   r.width = width;
   XftDrawSetClipRectangles(xw.draw, winx, winy, &r, 1);
 
-  /* Render the glyphs. */
-  /*XftDrawGlyphFontSpec(xw.draw, fg, specs, len);*/
+  if (base.mode & ATTR_BOXDRAW) {
+    drawboxes(winx, winy, width / len, win.ch, fg, bg, specs, len);
+  } else {
+    /* Render the glyphs. */
+    XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
+  }
+
   FcBool b = FcFalse;
   FcPatternGetBool(specs->font->pattern, FC_COLOR, 0, &b);
   if (!b) {
@@ -1566,6 +1580,7 @@ void xdrawglyph(Glyph g, int x, int y) {
 
 void xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og) {
   Color drawcol;
+  XRenderColor colbg;
 
   /* remove the old cursor */
   if (selected(ox, oy))
@@ -1578,7 +1593,8 @@ void xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og) {
   /*
    * Select the right color for the right mode.
    */
-  g.mode &= ATTR_BOLD | ATTR_ITALIC | ATTR_UNDERLINE | ATTR_STRUCK | ATTR_WIDE;
+  g.mode &= ATTR_BOLD | ATTR_ITALIC | ATTR_UNDERLINE | ATTR_STRUCK | ATTR_WIDE |
+            ATTR_BOXDRAW;
 
   if (IS_SET(MODE_REVERSE)) {
     g.mode |= ATTR_REVERSE;
@@ -1595,10 +1611,24 @@ void xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og) {
       g.fg = defaultfg;
       g.bg = defaultrcs;
     } else {
+      /** this is the main part of the dynamic cursor color patch */
+      g.bg = g.fg;
       g.fg = defaultbg;
-      g.bg = defaultcs;
     }
-    drawcol = dc.col[g.bg];
+
+    /**
+     * and this is the second part of the dynamic cursor color patch.
+     * it handles the `drawcol` variable
+     */
+    if (IS_TRUECOL(g.bg)) {
+      colbg.alpha = 0xffff;
+      colbg.red = TRUERED(g.bg);
+      colbg.green = TRUEGREEN(g.bg);
+      colbg.blue = TRUEBLUE(g.bg);
+      XftColorAllocValue(xw.dpy, xw.vis, xw.cmap, &colbg, &drawcol);
+    } else {
+      drawcol = dc.col[g.bg];
+    }
   }
 
   /* draw the new one */

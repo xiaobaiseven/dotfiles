@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+#include <gd.h>
+
 /* macros */
 #define MIN(a, b)		((a) < (b) ? (a) : (b))
 #define MAX(a, b)		((a) < (b) ? (b) : (a))
@@ -114,7 +116,8 @@ void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
 char *xstrdup(const char *);
 
-int xgetcolor(int x, unsigned char *r, unsigned char *g, unsigned char *b);
+// from @LukeSmithxyz
+void externalpipe(const Arg *);
 
 /* config.h globals */
 extern char *utmp;
