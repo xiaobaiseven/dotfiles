@@ -8,12 +8,13 @@
 // static char *font = "Liberation
 // Mono:pixelsize=15:antialias=true:autohint=true";
 static char *font =
-    "LXGW WenKai Mono Light:pixelsize=15:antialias=true:autohint=true";
+    "JetBrainsMono Nerd Font:pixelsize=12:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
     /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true",
      */
     //	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true",
+    "LXGW WenKai Mono:pixelsize=15:antialias=true:autohint=true",
     "Fira Code Nerd Font Mono:pixelsize=15:antialias=true:autohint=true",
     "Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
 
@@ -119,7 +120,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.6;
+float alpha = 0.7;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {

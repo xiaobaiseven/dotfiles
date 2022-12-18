@@ -34,8 +34,9 @@ static const int systraypinningfailfirst =
           display systray on the last monitor*/
 static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
-static const char *fonts[] = {"LXGW WenKai Light:size=10",
-                              "Fira Code Nerd Font Mono:size=12"};
+static const char *fonts[] = {
+    "JetBrainsMono Nerd Font:size=10", "LXGW WenKai Light:size=10",
+    "Noto Color Emoji:size=10", "Fira Code Nerd Font Mono:size=12"};
 static const char dmenufont[] = "LXGW WenKai Light:size=10";
 static const char col_gray1[] = "#222222"; // 状态条底色
 static const char col_gray2[] = "#444444"; // 当static const unsigned int
@@ -92,7 +93,6 @@ static const int lockfullscreen =
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"[平铺]", tile}, /* first entry is default */
-    {"[浮动]", NULL}, /* no layout function means floating behavior */
     {"[单页]", monocle},
     {"[网格]", magicgrid},
 };
@@ -120,15 +120,15 @@ static const char *dmenucmd[] = {
 static const char *termcmd[] = {"st", NULL};
 // static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = {"alacritty", "-t", scratchpadname, NULL};
+static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
+                                      "-g", "120x34", NULL};
 static const char *scratchpadstcmd[] = {"st",     "-t", scratchpadname, "-g",
                                         "120x34", "-e", "ranger",       NULL};
 static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",       "run",
                                  "-theme", "gaara-theme", NULL};
-static const char *firefoxcmd[] = {"firefox", NULL};
-// static const char *chromecmd[] = {"google-chrome-stable",
+static const char *browsercmd[] = {"firefox", NULL};
 //                                 "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/xihe/.config/scripts/random-change-sp.sh", NULL};
@@ -139,10 +139,8 @@ static const Key keys[] = {
     {MODKEY, XK_d, spawn, {.v = roficmd}},              /*打开ropfi*/
     {MODKEY | ShiftMask, XK_d, spawn, {.v = roficmd1}}, /*以命令模式打开rofi*/
     {Mod1Mask, XK_a, spawn, {.v = screenshotcmd}},      /*打开火焰截图*/
-    //{MODKEY, XK_c, spawn, {.v = chromecmd}},            /*打开chrome*/
-    {MODKEY, XK_c, spawn, {.v = firefoxcmd}}, /*打开chrome*/
-    {MODKEY, XK_r, spawn, {.v = radomchwp}},  /*随机切换壁纸*/
-    //{MODKEY, XK_g, spawn, {.v = browsercmd}},
+    {MODKEY, XK_r, spawn, {.v = radomchwp}},            /*随机切换壁纸*/
+    {MODKEY, XK_c, spawn, {.v = browsercmd}},
     ///*以代理模式打开chrome*/
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},     // 打开dmenu
     {MODKEY, XK_Return, spawn, {.v = termcmd}}, // 打开终端
