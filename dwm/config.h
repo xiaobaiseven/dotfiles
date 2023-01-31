@@ -23,7 +23,7 @@ static const int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 1; /* 是否显示状态栏0 means no bar */
 static const int topbar = 1; /* 指定状态栏位置 0底部 1顶部 0 means bottom bar */
-#define ICONSIZE 16   /* icon size */
+#define ICONSIZE 15   /* icon size */
 #define ICONSPACING 5 /* space between icon and title */
 static const unsigned int systraypinning =
     0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor
@@ -34,36 +34,37 @@ static const int systraypinningfailfirst =
           display systray on the last monitor*/
 static const int showsystray = 1;   /* 0 means no systray */
 static const Bool viewontag = True; /* Switch view on tag switch */
-static const char *fonts[] = {
-    "JetBrainsMono Nerd Font:size=10", "LXGW WenKai Light:size=10",
-    "Noto Color Emoji:size=10", "Fira Code Nerd Font Mono:size=12"};
+static const char *fonts[] = {"LXGW WenKai Light:size=10",
+                              "Noto Color Emoji:size=10",
+                              "Fira Code Nerd Font Mono:size=12"};
 static const char dmenufont[] = "LXGW WenKai Light:size=10";
 static const char col_gray1[] = "#222222"; // 状态条底色
 static const char col_gray2[] = "#444444"; // 当static const unsigned int
 //                // borderpx不为0时，非活动窗口外边框颜色
-static const char col_gray3[] = "#bd93f9"; // 当前非活动的title字体颜色
+static const char col_gray3[] = "#bbbbbb"; // 当前非活动的title字体颜色
 static const char col_gray4[] = "#8be9fd"; // 当前活动的title字体颜色
-static const char col_cyan[] = "#111111";  // title底色
+static const char col_cyan[] = "#37474F";  // title底色
+static const char col_border[] = "#bd93f9";
 static const unsigned int baralpha = 0x99; /* 状态栏透明度 */
-static const unsigned int borderalpha = 0xdd; /* 边框透明度 */
+// static const unsigned int borderalpha = OPAQUE;  /* 边框透明度 */
 static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
-    [SchemeSel] = {col_gray4, col_cyan, col_cyan},
-    [SchemeHid] = {col_cyan, col_gray1, col_cyan},
+    [SchemeSel] = {col_gray4, col_cyan, col_border},
+    [SchemeHid] = {col_cyan, col_gray1, col_border},
 };
 static const unsigned int alphas[][3] = {
     /*               fg      bg        border     */
-    [SchemeNorm] = {OPAQUE, baralpha, borderalpha},
-    [SchemeSel] = {OPAQUE, baralpha, borderalpha},
+    [SchemeNorm] = {OPAQUE, baralpha, OPAQUE},
+    [SchemeSel] = {OPAQUE, baralpha, OPAQUE},
 };
 /* tagging */
 static const char *tags[] = {"\uf015¹", "\ue5fe²", "\uf030³",
                              "\uf268⁴", "\uf269⁵", "\ue62a⁶",
                              "\ue217⁷", "\uf2dc⁸", "\uf30d⁹"};
 
-static int gappi = 12; /* 窗口与窗口 缝隙大小 */
-static int gappo = 12; /* 窗口与边缘 缝隙大小 */
+static int gappi = 10; /* 窗口与窗口 缝隙大小 */
+static int gappo = 10; /* 窗口与边缘 缝隙大小 */
 static const int _gappo =
     12; /* 窗口与窗口 缝隙大小 不可变 用于恢复时的默认值 */
 static const int _gappi =
@@ -118,7 +119,7 @@ static const char *dmenucmd[] = {
     "dmenu_run", "-m",      dmenumon, "-fn",    dmenufont, "-nb",     col_gray1,
     "-nf",       col_gray3, "-sb",    col_cyan, "-sf",     col_gray4, NULL};
 static const char *termcmd[] = {"st", NULL};
-// static const char *termalacritty[] = {"alacritty", NULL};
+static const char *termalacritty[] = {"alacritty", NULL};
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = {"st", "-t",     scratchpadname,
                                       "-g", "120x34", NULL};
@@ -126,13 +127,14 @@ static const char *scratchpadstcmd[] = {"st",     "-t", scratchpadname, "-g",
                                         "120x34", "-e", "ranger",       NULL};
 static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
-static const char *roficmd1[] = {"rofi",   "-show",       "run",
-                                 "-theme", "gaara-theme", NULL};
+static const char *roficmd1[] = {"rofi",   "-show",  "run",
+                                 "-theme", "arthur", NULL};
 static const char *browsercmd[] = {"firefox", NULL};
-//                                 "--enable-features=VaapiVideoDecoder", NULL};
+// "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/xihe/.config/scripts/random-change-sp.sh", NULL};
-static const char *screenshotcmd[] = {"flames", "gui", NULL};
+static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
+// static const char *screenshotcmd[] = {"flames", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -145,13 +147,13 @@ static const Key keys[] = {
     {MODKEY, XK_p, spawn, {.v = dmenucmd}},     // 打开dmenu
     {MODKEY, XK_Return, spawn, {.v = termcmd}}, // 打开终端
     //{Mod1Mask, XK_Return, spawn, {.v = termcmd}},     // 打开终端
-    //{MODKEY, XK_Return, spawn, {.v = termalacritty}}, // 打开终端
-    {MODKEY, XK_b, togglebar, {0}}, // 隐藏状态栏
+    {Mod1Mask, XK_Return, spawn, {.v = termalacritty}}, // 打开终端
+    {MODKEY, XK_b, togglebar, {0}},                     // 隐藏状态栏
     {MODKEY | ShiftMask,
-     XK_b,
+     XK_Return,
      rotatestack,
      {.i = +1}}, // 循环交换两个窗口的位置
-    {MODKEY | ShiftMask, XK_p, rotatestack, {.i = -1}},
+    //{MODKEY | ShiftMask, XK_b, rotatestack, {.i = -1}},
     {MODKEY, XK_j, focusstackvis, {.i = +1}}, // 光标在窗口之间循环
     {MODKEY, XK_k, focusstackvis, {.i = -1}},
     {MODKEY | ShiftMask, XK_j, focusstackhid, {.i = +1}},
@@ -160,13 +162,12 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_i, incnmaster, {.i = -1}}, // 将窗口改为横着
     {MODKEY, XK_h, setmfact, {.f = -0.05}}, // 左右调整窗口占比
     {MODKEY, XK_l, setmfact, {.f = +0.05}},
-    {MODKEY | ShiftMask, XK_Return, zoom, {0}}, // 交换两个刚打开的窗口的位置
-    {MODKEY, XK_Tab, view, {0}},                // 切换标签
-    {MODKEY, XK_q, killclient, {0}},            // 关闭当前窗口
+    //{MODKEY | ShiftMask, XK_Return, zoom, {0}}, // 交换两个刚打开的窗口的位置
+    {MODKEY, XK_Tab, view, {0}},                   // 切换标签
+    {MODKEY, XK_q, killclient, {0}},               // 关闭当前窗口
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}}, // 窗口改为平铺模式
     {MODKEY, XK_n, setlayout, {.v = &layouts[1]}}, // 窗口改为浮动模式
     {MODKEY, XK_m, setlayout, {.v = &layouts[2]}}, // 当前窗口占满屏幕
-    {MODKEY, XK_g, setlayout, {.v = &layouts[3]}}, // 当前窗口占满屏幕
     {MODKEY, XK_a, toggleoverview, {0}},           // 当前窗口占满屏幕
     {MODKEY, XK_F11, spawn, {.v = downvol}},       /*减小音量*/
     {MODKEY, XK_F9, spawn, {.v = mutevol}},        /*静音*/

@@ -20,7 +20,7 @@ get_cputemp()
   cpu_last=("${cpu_now[@]}")
   cpu_last_sum=$cpu_sum
 	cpu_temp=($(sensors coretemp-isa-0000 | awk -F: '{ print $2 }' | sed -n '3p' | sed -r 's/[^0-9]*([0-9](.*)°C  ).*/\1/'))
-	echo " ""${cpu_usage}% "💎" ${cpu_temp}"
+	echo "${cpu_usage}%"💎"${cpu_temp}"
 }
 
 get_cputemp

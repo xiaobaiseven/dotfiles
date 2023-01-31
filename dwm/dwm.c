@@ -305,7 +305,6 @@ static void seturgent(Client *c, int urg);
 static void show(const Arg *arg);
 static void showwin(Client *c);
 static void showhide(Client *c);
-static void sigchld(int unused);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
@@ -2028,7 +2027,7 @@ void fullscreen(const Arg *arg) {
     for (last_layout = (Layout *)layouts;
          last_layout != selmon->lt[selmon->sellt]; last_layout++)
       ;
-    setlayout(&((Arg){.v = &layouts[2]}));
+    setlayout(&((Arg){.v = &layouts[1]}));
   } else {
     setlayout(&((Arg){.v = last_layout}));
   }
@@ -2126,9 +2125,17 @@ void setup(void) {
   int i;
   XSetWindowAttributes wa;
   Atom utf8string;
+  struct sigaction sa;
 
-  /* clean up any zombies immediately */
-  sigchld(0);
+  /* do not transform children into zombies when they terminate */
+  sigemptyset(&sa.sa_mask);
+  sa.sa_flags = SA_NOCLDSTOP | SA_NOCLDWAIT | SA_RESTART;
+  sa.sa_handler = SIG_IGN;
+  sigaction(SIGCHLD, &sa, NULL);
+
+  /* clean up any zombies (inherited from .xinitrc etc) immediately */
+  while (waitpid(-1, NULL, WNOHANG) > 0)
+    ;
 
   /* init screen */
   screen = DefaultScreen(dpy);
@@ -2251,13 +2258,6 @@ void showhide(Client *c) {
     showhide(c->snext);
     XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
   }
-}
-
-void sigchld(int unused) {
-  if (signal(SIGCHLD, sigchld) == SIG_ERR)
-    die("can't install SIGCHLD handler:");
-  while (0 < waitpid(-1, NULL, WNOHANG))
-    ;
 }
 
 void spawn(const Arg *arg) {

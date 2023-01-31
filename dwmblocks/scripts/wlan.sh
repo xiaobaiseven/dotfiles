@@ -31,4 +31,4 @@ get_bytes
 vel_recv=$(get_velocity $received_bytes $old_received_bytes $now)
 vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
-echo "⏬ ${vel_recv} ⏫ ${vel_trans}"
+echo "⏬${vel_recv} ⏫${vel_trans}"

@@ -217,8 +217,8 @@ handle_mime() {
     case "${mimetype}" in
         # Text
         text/* | */xml)
-            if  command -v ccat &>/dev/null; then
-                ccat --color=always ${FILE_PATH}
+            if  command -v bat &>/dev/null; then
+                bat --color=always ${FILE_PATH}
                 exit 0
             fi
             exit 2;;
