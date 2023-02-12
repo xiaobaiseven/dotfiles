@@ -59,9 +59,11 @@ static const unsigned int alphas[][3] = {
     [SchemeSel] = {OPAQUE, baralpha, OPAQUE},
 };
 /* tagging */
-static const char *tags[] = {"\uf015¹", "\ue5fe²", "\uf030³",
+/*static const char *tags[] = {"\uf015¹", "\ue5fe²", "\uf030³",
                              "\uf268⁴", "\uf269⁵", "\ue62a⁶",
-                             "\ue217⁷", "\uf2dc⁸", "\uf30d⁹"};
+                             "\ue217⁷", "\uf2dc⁸", "\uf30d⁹"};*/
+static const char *tags[] = {"☯",   "乾☰", "兑☱", "离☲", "震☳",
+                             "巽☴", "坎☵", "艮☶", "坤☷"};
 
 static int gappi = 10; /* 窗口与窗口 缝隙大小 */
 static int gappo = 10; /* 窗口与边缘 缝隙大小 */
@@ -129,8 +131,9 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",  "run",
                                  "-theme", "arthur", NULL};
-static const char *browsercmd[] = {"firefox", NULL};
-// "--enable-features=VaapiVideoDecoder", NULL};
+static const char *browsercmd[] = {"google-chrome-stable",
+                                   "--enable-features=VaapiVideoDecoder",
+                                   "--enable-features=AllowQt5", NULL};
 static const char *radomchwp[] = {
     "/home/xihe/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
