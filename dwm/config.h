@@ -131,9 +131,8 @@ static const char *roficmd[] = {"rofi",   "-show",       "drun",
                                 "-theme", "gaara-theme", NULL};
 static const char *roficmd1[] = {"rofi",   "-show",  "run",
                                  "-theme", "arthur", NULL};
-static const char *browsercmd[] = {"google-chrome-stable",
-                                   "--enable-features=VaapiVideoDecoder",
-                                   "--enable-features=AllowQt5", NULL};
+static const char *browsercmd[] = {"chromium",
+                                   "--enable-features=VaapiVideoDecoder", NULL};
 static const char *radomchwp[] = {
     "/home/xihe/.config/scripts/random-change-sp.sh", NULL};
 static const char *screenshotcmd[] = {"flameshot", "gui", NULL};
