@@ -1,0 +1,11 @@
+COMMON_FLAGS="-march=skylake -Os -pipe -finline-functions -fno-math-errno -fno-trapping-math"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+# -O2 in LDFLAGS refers to binary size optimization during linking, it is NOT related to the -O levels of the compiler              
+LDFLAGS="${COMMON_FLAGS} -fuse-ld=lld -rtlib=compiler-rt -unwindlib=libunwind -Wl,-Os -Wl,--as-needed -Wl,--hash-style=gnu -Wl,--sort-common -Wl,--strip-all"
+
+CC="clang"
+CXX="clang++"
+AR="llvm-ar"
+NM="llvm-nm"
+RANLIB="llvm-ranlib"

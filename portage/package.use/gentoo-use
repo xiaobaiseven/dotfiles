@@ -1,0 +1,44 @@
+*/* -systemd -doc -test -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -bluetooth -cups -pdf -libunwind
+*/* clang X python zstd nls tk truetype nvidia bidi alsa pulseaudio xml udev icu dbus policykit elogind vdpau vulkan pgo lto nvenc llvm-libunwind
+*/* LUA_SINGLE_TARGET: -* luajit
+*/* LUA_TARGETS: -* luajit
+*/* PYTHON_TARGETS: -* python3_11
+*/* PYTHON_SINGLE_TARGET: -* python3_11
+
+# a
+app-crypt/gcr gtk
+app-admin/doas persist
+app-text/ghostscript-gpl L10N: -*
+app-text/xmlto text
+
+# d
+dev-lang/luajit lua52compat
+dev-lang/rust clippy rust-analyzer rust-src rustfmt system-bootstrap
+
+# m
+media-fonts/noto-emoji icons
+media-fonts/nerd-fonts firacode
+media-libs/libvpx postproc
+media-libs/libsndfile minimal
+media-video/obs-studio lua nvenc pulseaudio speex v4l
+# n
+net-libs/nodejs inspector
+
+# s
+sys-boot/grub mount
+sys-devel/clang-common default-compiler-rt default-lld llvm-libunwind
+sys-devel/gcc fortran nls openmp go graphite jit objc objc++ valgrind
+sys-kernel/gentoo-sources symlink
+sys-libs/zlib minizip
+sys-libs/llvm-libunwind static-libs
+
+# w
+www-client/w3m  fbcon imlib
+www-client/firefox sndio geckodriver clang
+
+# x
+x11-base/xorg-server xvfb
+x11-terms/st savedconfig
+x11-wm/dwm savedconfig
+
+

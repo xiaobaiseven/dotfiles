@@ -1,6 +1,6 @@
-music_dir = ["~/Music/mp3", "~/Music"]
+music_dir = ["/mnt/Music"]
 loop_mode = "Queue"
-volume = 70
+volume = 30
 speed = 10
 add_playlist_front = false
 gapless = true
@@ -379,7 +379,7 @@ args = "c"
 
 [keys.global_config_open.modifier]
 type = "KeyModifiers"
-bits = 2
+bits = 4
 [keys.config_save.code]
 type = "Char"
 args = "s"

@@ -1,0 +1,11 @@
+# $N refers to the amount of threads used during LTO, one option is to be set to the value of $(nproc)
+CFLAGS="-flto=thin -march=skylake -Os -pipe -finline-functions -fno-math-errno -fno-trapping-math"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+LDFLAGS="${COMMON_FLAGS} -Wl,-Os -Wl,--as-needed -Wl,--hash-style=gnu -Wl,--sort-common -Wl,--strip-all"
+
+CC="gcc"
+CXX="g++"
+AR="gcc-ar"
+NM="gcc-nm"
+RANLIB="gcc-ranlib"
