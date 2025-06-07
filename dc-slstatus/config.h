@@ -74,18 +74,19 @@ static const char get_cpu_temp[] =
 static const char get_nvidia_temp[] =
     "nvidia-settings -q gpucoretemp -t | head -n 1";
 static const char get_music_info[] = "bash ~/.config/scripts/get_music_info.sh";
+
+static const char wlan[] = "python3 -u ~/.config/scripts/wlan.py";
+static const char bat[] = "python3 -u ~/.config/scripts/battery.py";
 static const struct arg args[] = {
     /* function format          argument */
+    {run_command, " %s ", get_music_info},
     {cpu_perc, " \uf2db %s%%", NULL},
     //{temp," \uf2c8 %s \u2103", "/sys/class/thermal/thermal_zone0/temp"},
     {run_command, " \uf2c8 %s", get_cpu_temp},
     {ram_perc, "\uf85a %s%%", NULL},
     {disk_perc, " \uf0a0 %s%%", "/"},
-    {run_command, " \uf8c7 %s°C", get_nvidia_temp},
-    {netspeed_rx, " \uf063 %s", "enp4s0"},
-    {netspeed_tx, " \uf062 %s", "enp4s0"},
-    //{ipv4, " \uf26b %s ", "enp4s0"},
+    {run_command, " %s ", wlan},
     {run_command, " %s ", vol},
-    {run_command, " %s ", get_music_info},
+    {run_command, " %s ", bat},
     {run_command, "\uf455 %s ", get_time},
 };
