@@ -1,0 +1,20 @@
+
+# These settings were set by the catalyst build script that automatically
+# built this stage.
+# Please consult /usr/share/portage/config/make.conf.example for a more
+# detailed example.
+COMMON_FLAGS="-march=skylake -O2 -pipe -finline-functions -fomit-frame-pointer -fopenmp"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+FCFLAGS="${COMMON_FLAGS}"
+FFLAGS="${COMMON_FLAGS}"
+LDFLAGS="${COMMON_FLAGS} -fuse-ld=lld -rtlib=compiler-rt -unwindlib=libunwind -Wl,-O2 -Wl,--as-needed -Wl,--hash-style=gnu -Wl,--sort-common"
+
+CC="clang"
+CPP="clang-cpp" # necessary for xorg-server and possibly other packages
+CXX="clang++"
+AR="llvm-ar"
+NM="llvm-nm"
+RANLIB="llvm-ranlib"
+
+RUSTFLAGS="-C target-cpu=skylake -C strip=debuginfo -C opt-level=3 -Clinker=clang -Clinker-plugin-lto -Clink-arg=-fuse-ld=lld"

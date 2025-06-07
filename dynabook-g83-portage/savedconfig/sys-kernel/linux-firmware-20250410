@@ -1,0 +1,7 @@
+# Remove files that shall not be installed from this list.
+i915/kbl_guc_70.1.1.bin
+i915/kbl_huc_4.0.0.bin
+i915/kbl_dmc_ver1_04.bin
+intel/ibt-20-1-3.ddc
+intel/ibt-20-1-3.sfi
+iwlwifi-cc-a0-77.ucode

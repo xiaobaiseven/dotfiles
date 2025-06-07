@@ -9,21 +9,21 @@ dwm_get_music_info(){
 							STATUS="📡"
 							SEP="-"
 							if [ "$ARTIST" = "" ];then
-								INFO="$STATUS""$TITLE "
+								echo "$STATUS""$TITLE "
 							else
-								INFO="$STATUS""$ARTIST""$SEP""$TITLE "
+								echo "$STATUS""$ARTIST""$SEP""$TITLE"
 							fi
 						elif [ "$STATUS" = "Paused" ]; then	
-							STATUS="🔕"
+							STATUS="⏯"
 							SEP="-"
 							if [ "$ARTIST" = "" ];then
-								INFO="$STATUS""$TITLE "
+								echo "$STATUS""$TITLE"
 							else
-								INFO="$STATUS""$ARTIST""$SEP""$TITLE "
+								echo "$STATUS""$ARTIST""$SEP""$TITLE"
 							fi
 						else
-							INFO=""
+							STATUS=""
+						echo ""
         fi
-				echo ${INFO:0:35}
 }
 dwm_get_music_info

@@ -1,0 +1,65 @@
+*/* -wayland -systemd -doc -test -gtk-doc -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -cups -pdf -pulseaudio -oss -gpm -iptables -bindist -qt5 -initramfs
+*/* X python zstd nls tk truetype bidi alsa pipewire xml udev icu dbus policykit nftables elogind vaapi vulkan lto qt6 iwd bluetooth opengl
+*/* LUA_SINGLE_TARGET: -* luajit
+*/* LUA_TARGETS: -* luajit
+*/* PYTHON_TARGETS: -* python3_13
+*/* PYTHON_SINGLE_TARGET: -* python3_13
+*/* LLVM_SLOT: -* 20
+
+
+# a
+app-admin/doas persist
+app-containers/containerd btrfs
+app-containers/docker btrfs
+app-crypt/gcr gtk
+app-emulation/libvirt pcap numa fuse macvtap vepa qemu
+app-emulation/qemu fuse usbredir virgl spice QEMU_USER_TARGETS: x86_64
+app-shells/gitstatus zsh-completion
+app-text/ghostscript-gpl L10N: -*
+app-text/xmlto text
+
+# d
+dev-lang/luajit lua52compat
+dev-lang/rust clippy rust-analyzer rust-src rustfmt system-bootstrap
+dev-qt/qtbase icu
+dev-vcs/git highlight
+# l
+llvm-core/clang-common default-compiler-rt default-lld llvm-libunwind
+llvm-core/clang-runtime llvm-libunwind default-lld default-compiler-rt
+llvm-runtimes/libunwind static-libs
+# m
+media-fonts/noto-emoji icons
+media-fonts/nerd-fonts firacode -nerdfontssymbolsonly
+media-fonts/source-han-sans L10N: -* ko
+media-libs/libvpx postproc
+media-libs/libsndfile minimal
+media-libs/mesa -llvm lm-sensors
+media-video/ffmpeg opus vpx x265 
+media-video/pipewire pipewire-alsa sound-server
+media-video/wireplumber LUA_SINGLE_TARGET: -* lua5-4
+# n
+net-dns/dnsmasq script
+net-im/tencent-qq bwrap
+net-libs/gnutls pkcs11 tools
+net-libs/nodejs inspector npm
+net-misc/aria2 xmlrpc metalink bittorrent sqlite
+net-misc/networkmanager -ppp connection-sharing iwd 
+net-misc/spice-gtk usbredir
+net-proxy/sing-box grpc tor v2ray-api
+net-wireless/bluez experimental
+# s
+sys-boot/grub mount
+sys-devel/gcc fortran nls openmp graphite jit objc objc++
+sys-kernel/installkernel grub
+sys-kernel/linux-firmware savedconfig
+sys-kernel/xanmod-kernel savedconfig clang
+sys-libs/glibc compile-locales gd
+sys-libs/zlib minizip
+
+# w
+www-client/w3m fbcon imlib
+
+# x
+x11-base/xorg-server xvfb
+x11-terms/st savedconfig
+x11-wm/dwm savedconfig

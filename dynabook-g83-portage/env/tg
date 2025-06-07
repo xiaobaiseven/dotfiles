@@ -1,0 +1,12 @@
+
+# These settings were set by the catalyst build script that automatically
+# built this stage.
+# Please consult /usr/share/portage/config/make.conf.example for a more
+# detailed example.
+COMMON_FLAGS="-march=skylake -mtune=skylake -mabm -mno-hle --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=6144 -O2 -pipe -finline-functions -fomit-frame-pointer -floop-block -fgraphite-identity -floop-parallelize-all -fopenmp ${WARNING_FLAGS}"
+CFLAGS="${COMMON_FLAGS}"
+CXXFLAGS="${COMMON_FLAGS}"
+FCFLAGS="${COMMON_FLAGS}"
+FFLAGS="${COMMON_FLAGS}"
+LDFLAGS="${COMMON_FLAGS} -Wl,-O2 -Wl,--as-needed -Wl,--hash-style=gnu -Wl,--sort-common"
+MAKEOPTS="-j4"
