@@ -83,7 +83,7 @@ static const struct arg args[] = {
     {cpu_perc, " \uf2db %s%%", NULL},
     //{temp," \uf2c8 %s \u2103", "/sys/class/thermal/thermal_zone0/temp"},
     {run_command, " \uf2c8 %s", get_cpu_temp},
-    {ram_perc, "\uf85a %s%%", NULL},
+    {ram_perc, "\uefc5 %s%%", NULL},
     {disk_perc, " \uf0a0 %s%%", "/"},
     {run_command, " %s ", wlan},
     {run_command, " %s ", vol},
