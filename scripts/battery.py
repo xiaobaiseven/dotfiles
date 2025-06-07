@@ -5,27 +5,50 @@ if __name__ == "__main__":
     if battery is not None:
         percent = battery.percent
         plugged = battery.power_plugged
-        if not plugged:
-            if percent == 100:
-                plug = "󱊣"
-            elif percent <= 20:
-                plug = "󰁻"
-            elif 20 < percent <= 50:
-                plug = "󰁽"
-            elif 50 < percent <= 80:
-                plug = "󰁿"
-            else:
-                plug = "󰂁"
-        else:
-            if percent == 100:
-                plug = "󰂅"
-            elif percent <= 20:
+        if plugged:
+            if percent <= 10:
+                plug = "󰢜"
+            elif 10 < percent <= 20:
                 plug = "󰂆"
-            elif 20 < percent <= 50:
+            elif 20 < percent <= 30:
+                plug = "󰂇"
+            elif 30 < percent <= 40:
+                plug = "󰂈"
+            elif 40 < percent <= 50:
                 plug = "󰢝"
-            elif 50 < percent <= 80:
+            elif 50 < percent <= 60:
+                plug = "󰂉"
+            elif 60 < percent <= 70:
+                plug = "󰢞"
+            elif 70 < percent <= 80:
                 plug = "󰂊"
-            else:
+            elif 80 < percent <= 90:
                 plug = "󰂋"
+            else:
+                plug = "󰂅"
+        else:
+            if percent <= 10:
+                plug = "󰁺"
+            elif 10 < percent <= 20:
+                plug = "󰁻"
+            elif 20 < percent <= 30:
+                plug = "󰁼"
+            elif 30 < percent <= 40:
+                plug = "󰁽"
+            elif 40 < percent <= 50:
+                plug = "󰁾"
+            elif 50 < percent <= 60:
+                plug = "󰁿"
+            elif 60 < percent <= 70:
+                plug = "󰂀"
+            elif 70 < percent <= 80:
+                plug = "󰂁"
+            elif 80 < percent <= 90:
+                plug = "󰂂"
+            else:
+                plug = "󰁹"
 
-        print(f"{plug} {percent:.1f}%")
+    else:
+        print("没有电池")
+        
+    print(f"{plug} {percent:.1f}%")
