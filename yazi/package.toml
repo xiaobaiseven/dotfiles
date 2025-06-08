@@ -1,0 +1,54 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "63f9650"
+hash = "a7ab702e1ef0c097defbc976ed34c186"
+
+[[plugin.deps]]
+use = "KKV9/compress"
+rev = "9fc8fe0"
+hash = "2ad086899bf368fba211a33d8f68c39d"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "63f9650"
+hash = "bf6f074cd41ee33c3360341d168f9733"
+
+[[plugin.deps]]
+use = "Rolv-Apneseth/starship"
+rev = "6a0f3f7"
+hash = "d5a74d95c2e8194ac352c5e10e81e64f"
+
+[[plugin.deps]]
+use = "h-hg/yamb"
+rev = "22af003"
+hash = "7cc42012a7c2099f80064d228feb8d44"
+
+[[plugin.deps]]
+use = "llanosrocas/yaziline"
+rev = "e79b067"
+hash = "f590c5b7d0730e8d6023b1b34ddf7ead"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "63f9650"
+hash = "3996fc74044bc44144b323686f887e1"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mactag"
+rev = "63f9650"
+hash = "6e0cbddb97038ea95f04f9de0944c175"
+
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+rev = "2e3b617"
+hash = "b67ee12053113983273e9118a7d1272b"
+
+[[plugin.deps]]
+use = "ahkohd/eza-preview"
+rev = "7a93433"
+hash = "22e1bd3dd03894746a3540b5f3729d0c"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "d04a298"
+hash = "7b9ff01a0070cc9176e0c683329aeb26"
