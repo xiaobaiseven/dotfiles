@@ -1,4 +1,4 @@
-*/* -wayland -systemd -doc -test -gtk-doc -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -cups -pdf -pulseaudio -oss -gpm -iptables -bindist -qt5 -initramfs
+*/* -wayland -systemd -doc -test -gtk-doc -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -cups -pdf -pulseaudio -oss -gpm -iptables -bindist -qt5 -initramfs -debug
 */* X python zstd nls tk truetype bidi alsa pipewire xml udev icu dbus policykit nftables elogind vaapi vulkan lto qt6 iwd bluetooth opengl
 */* LUA_SINGLE_TARGET: -* luajit
 */* LUA_TARGETS: -* luajit
@@ -9,6 +9,7 @@
 
 # a
 app-admin/doas persist
+app-arch/7zip rar uasm
 app-containers/containerd btrfs
 app-containers/docker btrfs
 app-crypt/gcr gtk
