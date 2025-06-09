@@ -1,5 +1,5 @@
 */* -wayland -systemd -doc -test -gtk-doc -gnome-shell -gnome -gnome-keyring -handbook -kde -kcm -cups -pdf -pulseaudio -oss -gpm -iptables -bindist -qt5 -initramfs -debug
-*/* X python zstd nls tk truetype bidi alsa pipewire xml udev icu dbus policykit nftables elogind vaapi vulkan lto qt6 iwd bluetooth opengl
+*/* X python zstd nls tk truetype bidi alsa pipewire xml udev wifi icu dbus policykit nftables elogind vaapi vulkan lto qt6 iwd bluetooth opengl
 */* LUA_SINGLE_TARGET: -* luajit
 */* LUA_TARGETS: -* luajit
 */* PYTHON_TARGETS: -* python3_13
@@ -13,6 +13,7 @@ app-arch/7zip rar uasm
 app-containers/containerd btrfs
 app-containers/docker btrfs
 app-crypt/gcr gtk
+app-editors/vscode egl kerberos
 app-emulation/libvirt pcap numa fuse macvtap vepa qemu
 app-emulation/qemu fuse usbredir virgl spice QEMU_USER_TARGETS: x86_64
 app-shells/gitstatus zsh-completion
@@ -20,9 +21,12 @@ app-text/ghostscript-gpl L10N: -*
 app-text/xmlto text
 
 # d
+dev-debug/gdb source-highlight debuginfod xxhash
+dev-libs/elfutils debuginfod
 dev-lang/luajit lua52compat
 dev-lang/rust clippy rust-analyzer rust-src rustfmt system-bootstrap
 dev-qt/qtbase icu
+dev-util/ctags json yaml
 dev-vcs/git highlight
 # l
 llvm-core/clang-common default-compiler-rt default-lld llvm-libunwind
@@ -58,6 +62,7 @@ sys-libs/glibc compile-locales gd
 sys-libs/zlib minizip
 
 # w
+www-client/firefox eme-free hwaccel libproxy wasm-sandbox wifi -system-av1 -system-harfbuzz -system-icu -system-jpeg -system-libevent -system-libvpx -system-webp
 www-client/w3m fbcon imlib
 
 # x
