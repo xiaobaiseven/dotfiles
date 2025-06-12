@@ -1,0 +1,14 @@
+#
+# This file is parsed by pam_env module
+#
+# Syntax: simple "KEY=VAL" pairs on separate lines
+#
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=\@im=fcitx
+export INPUT_METHOD=fcitx
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+QT_QPA_PLATFORMTHEME=qt6ct
+LIBVA_DRIVER_NAME=iHD
+COGL_ATLAS_DEFAULT_BLIT_MODE=framebuffer
