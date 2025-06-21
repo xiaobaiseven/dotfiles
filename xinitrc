@@ -1,7 +1,6 @@
 #!/bin/sh
 
 
-xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
 xrandr --dpi 96
 # 设置中文环境
@@ -74,16 +73,13 @@ exec $1
 wmname LG3D
 #设置半透明
 picom -cGbf --experimental-backend &
-#输入法
-fcitx5 -d &
 #设置壁纸
 feh --recursive --bg-fill ~/Pictures/wallpapers/古装美女和一只兔子3840_2160.jpg &
 #feh --recursive --bg-fill Pictures/wallpapers/mywallpaper.jpg &
 
 #状态栏
-#slstatus &
-dwmblocks &
+slstatus &
 # dwmstatus 2>&1 >/dev/null &
 #数字小键盘
-numlockx &
+bash ~/.config/scripts/auto_start.sh &
 exec dwm
