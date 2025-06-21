@@ -1,16 +1,14 @@
 #!/bin/bash
-VOL_STATUS=$(amixer sget Master | tail -n 1 | awk '{print $6;}')
-VOL=$(amixer sget Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
-if [ "$VOL_STATUS" = "[off]" ]; then
-    printf "🔇"
-else 
-    if [ "$VOL" -eq 0 ]; then
-        printf "🔇"
-    elif [ "$VOL" -gt 1 ] && [ "$VOL" -le 33 ]; then
-        printf "🔈%s""$VOL%%"
-    elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
-        printf "🔉%s""$VOL%%"
-    else
-        printf "🔊%s""$VOL%%"
-    fi
+if wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q "MUTED"; then
+	echo "🔇"
+else
+	VOL=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{printf "%.0f\n", $2 * 100}')
+    	if (( 0 < VOL <= 30 )); then
+    		STA="🔈"
+	elif (( 30 < VOL <= 60 )); then
+    		STA="🔉"
+	else 
+		STA="🔊"
+	fi
+	echo "${STA}${VOL}%"
 fi
