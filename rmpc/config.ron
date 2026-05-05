@@ -7,7 +7,7 @@
     theme: None,
     cache_dir: None,
     on_song_change: None,
-    lyrics_dir: Some("~/音乐/.lyrics"),
+    lyrics_dir: Some("~/Music/.lyrics"),
     volume_step: 5,
     max_fps: 30,
     scrolloff: 0,

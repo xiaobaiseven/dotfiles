@@ -1,6 +1,7 @@
 #!/bin/bash 
-gentoo-pipewire-launcher &
-aria2c --conf-path=/home/weixi/.config/aria2/aria2.conf -D &
+# gentoo-pipewire-launcher &
+# aria2c --conf-path=/home/weixi/.config/aria2/aria2.conf -D &
+dunst &
 fcitx5 -d &
-sleep 3
-notify-send "$(cdate -g)"
+# sleep 3
+# notify-send "$(cdate -g)"

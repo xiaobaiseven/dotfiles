@@ -1,22 +1,20 @@
 #!/bin/sh
-#设置系统语言为中文呢
-export LANG=zh_CN.UTF-8
 
-#设置ibus输入法环境变量
-#export GTK_IM_MODULE=ibus
-#export QT_IM_MODULE=ibus
-#export XMODIFIERS=\@im=ibus
-#export INPUT_METHOD=ibus
-#export SDL_IM_MODULE=ibus
-#export GLFW_IM_MODULE=ibus
+
+xrandr --auto
+xrandr --dpi 96
+# 设置中文环境
+eval "$(dbus-launch --sh-syntax --exit-with-session)"
+# export LANG=zh_CN.UTF-8
+
 
 #fcitx5环境变量
-export GTK_IM_MODULE=fcitx5
-export QT_IM_MODULE=fcitx5
-export XMODIFIERS=\@im=fcitx5
-export INPUT_METHOD=fcitx5
-export SDL_IM_MODULE=fcitx5
-export GLFW_IM_MODULE=fcitx5
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=\@im=fcitx
+export INPUT_METHOD=fcitx
+export SDL_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
 
 
 
@@ -70,20 +68,19 @@ fi
 
 
 # 开机自启动的软件
-
+export _JAVA_AWT_WM_NONREPARENTING=1
+exec $1
+wmname LG3D
 #设置半透明
-picom -cGbf &
-#输入法
-fcitx5 -d &
-#ibus-daemon --xim -d &
+# picom -cGbf --experimental-backend &
+picom -b &
 #设置壁纸
-# /bin/bash ~/.config/scripts/wp-autochange.sh &
-python -u ~/.config/scripts/changewp.py &
+feh --recursive --bg-fill ~/Pictures/wallpapers/Aeolian3-edit.png &
+#feh --recursive --bg-fill Pictures/wallpapers/mywallpaper.jpg &
 
 #状态栏
 slstatus &
 # dwmstatus 2>&1 >/dev/null &
-
-#网络托盘
-nm-applet &
+#数字小键盘
+bash ~/.config/scripts/auto_start.sh &
 exec dwm
