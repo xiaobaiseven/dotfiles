@@ -13,7 +13,7 @@
     preview_label_style: (fg: "blue"),
     preview_metadata_group_style: (fg: "blue", modifiers: "Bold"),
     highlighted_item_style: (fg: "blue", modifiers: "Bold"),
-    current_item_style: (fg: None, bg: "blue", modifiers: "Bold"),
+    current_item_style: (fg: "white", bg: "blue", modifiers: "Bold"),
     borders_style: (fg: "blue"),
     highlight_border_style: (fg: "blue"),
     symbols: (
