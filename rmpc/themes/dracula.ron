@@ -10,10 +10,10 @@
     header_background_color: None,
     modal_background_color: None,
     modal_backdrop: false,
-    preview_label_style: (fg: "yellow"),
-    preview_metadata_group_style: (fg: "yellow", modifiers: "Bold"),
+    preview_label_style: (fg: "blue"),
+    preview_metadata_group_style: (fg: "blue", modifiers: "Bold"),
     highlighted_item_style: (fg: "blue", modifiers: "Bold"),
-    current_item_style: (fg: "white", bg: "blue", modifiers: "Bold"),
+    current_item_style: (fg: None, bg: "blue", modifiers: "Bold"),
     borders_style: (fg: "blue"),
     highlight_border_style: (fg: "blue"),
     symbols: (
@@ -28,7 +28,7 @@
     ),
     level_styles: (
         info: (fg: "blue", bg: "black"),
-        warn: (fg: "yellow", bg: "black"),
+        warn: (fg: "blue", bg: "black"),
         error: (fg: "red", bg: "black"),
         debug: (fg: "light_green", bg: "black"),
         trace: (fg: "magenta", bg: "black"),
@@ -47,7 +47,7 @@
         thumb_style: (fg: "blue"),
     ),
     tab_bar: (
-        active_style: (fg: "black", bg: "blue", modifiers: "Bold"),
+        active_style: (fg: "white", bg: "blue", modifiers: "Bold"),
         inactive_style: (),
     ),
     lyrics: (
@@ -166,9 +166,9 @@
     components: {
         "state": Pane(Property(
             content: [
-                (kind: Text("["), style: (fg: "yellow", modifiers: "Bold")),
-                (kind: Property(Status(StateV2( ))), style: (fg: "yellow", modifiers: "Bold")),
-                (kind: Text("]"), style: (fg: "yellow", modifiers: "Bold")),
+                (kind: Text("["), style: (fg: "blue", modifiers: "Bold")),
+                (kind: Property(Status(StateV2( ))), style: (fg: "blue", modifiers: "Bold")),
+                (kind: Text("]"), style: (fg: "blue", modifiers: "Bold")),
             ], align: Left,
         )),
         "title": Pane(Property(
@@ -201,8 +201,8 @@
         )),
         "artist_and_album": Pane(Property(
             content: [
-                (kind: Property(Song(Artist)), style: (fg: "yellow", modifiers: "Bold"),
-                    default: (kind: Text("Unknown"), style: (fg: "yellow", modifiers: "Bold"))),
+                (kind: Property(Song(Artist)), style: (fg: "blue", modifiers: "Bold"),
+                    default: (kind: Text("Unknown"), style: (fg: "blue", modifiers: "Bold"))),
                 (kind: Text(" - ")),
                 (kind: Property(Song(Album)), default: (kind: Text("Unknown Album"))),
             ], align: Center, scroll_speed: 1
@@ -225,20 +225,20 @@
                         (kind: Property(Status(RepeatV2(
                             on_label: "z",
                             off_label: "z",
-                            on_style: (fg: "yellow", modifiers: "Bold"),
+                            on_style: (fg: "blue", modifiers: "Bold"),
                             off_style: (fg: "blue", modifiers: "Dim"),
                         )))),
                         (kind: Property(Status(RandomV2(
                             on_label: "x",
                             off_label: "x",
-                            on_style: (fg: "yellow", modifiers: "Bold"),
+                            on_style: (fg: "blue", modifiers: "Bold"),
                             off_style: (fg: "blue", modifiers: "Dim"),
                         )))),
                         (kind: Property(Status(ConsumeV2(
                             on_label: "c",
                             off_label: "c",
                             oneshot_label: "c",
-                            on_style: (fg: "yellow", modifiers: "Bold"),
+                            on_style: (fg: "blue", modifiers: "Bold"),
                             off_style: (fg: "blue", modifiers: "Dim"),
                             oneshot_style: (fg: "red", modifiers: "Dim"),
                         )))),
@@ -246,7 +246,7 @@
                             on_label: "v",
                             off_label: "v",
                             oneshot_label: "v",
-                            on_style: (fg: "yellow", modifiers: "Bold"),
+                            on_style: (fg: "blue", modifiers: "Bold"),
                             off_style: (fg: "blue", modifiers: "Dim"),
                             oneshot_style: (fg: "red", modifiers: "Bold"),
                         )))),
